@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  mysql:
+    image: mysql:8.0.2
+    volumes:
+      - ./.volumes/mysql:/var/lib/mysql
+      - ./mysql/initdb:/docker-entrypoint-initdb.d # database init files here.
+    environment:
+      - "MYSQL_ALLOW_EMPTY_PASSWORD=yes" # easier to use for development cluster
+    ports:
+      - "3306:3306"
+
+  ubersbt:
+    build:
+      context: ubersbt/
+    volumes:
+      - ../:/app # This container will compile all other scala projects
+      - ./.volumes/sbt/ivy2:/home/user/.ivy2
+      - ./.volumes/sbt/coursier:/home/user/.coursier
