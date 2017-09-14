@@ -1,3 +1,4 @@
+package edu.byu.cs478.toolkit;
 // ----------------------------------------------------------------
 // The contents of this file are distributed under the CC0 license.
 // See http://creativecommons.org/publicdomain/zero/1.0/
@@ -93,14 +94,14 @@ public class Matrix {
 			String line = s.nextLine().trim();
 			if (line.length() > 0 && line.charAt(0) != '%') {
 				if (!READDATA) {
-					
+
 					Scanner t = new Scanner(line);
 					String firstToken = t.next().toUpperCase();
-					
+
 					if (firstToken.equals("@RELATION")) {
 						String datasetName = t.nextLine();
 					}
-					
+
 					if (firstToken.equals("@ATTRIBUTE")) {
 						TreeMap<String, Integer> ste = new TreeMap<String, Integer>();
 						m_str_to_enum.add(ste);
@@ -156,7 +157,7 @@ public class Matrix {
 							if (textValue.length() > 0) {
 								double doubleValue;
 								int vals = m_enum_to_str.get(curPos).size();
-								
+
 								//Missing instances appear in the dataset as a double defined as MISSING
 								if (textValue.equals("?")) {
 									doubleValue = MISSING;
@@ -165,7 +166,7 @@ public class Matrix {
 								else if (vals == 0) {
 									doubleValue = Double.parseDouble(textValue);
 								}
-								// Discrete values appear as an index to the "name" 
+								// Discrete values appear as an index to the "name"
 								// of that value in the "attributeValue" structure
 								else {
 									doubleValue = m_str_to_enum.get(curPos).get(textValue);
@@ -173,7 +174,7 @@ public class Matrix {
 										throw new Exception("Error parsing the value '" + textValue + "' on line: " + line);
 									}
 								}
-								
+
 								newrow[curPos] = doubleValue;
 								curPos++;
 							}
@@ -226,7 +227,7 @@ public class Matrix {
 		}
 	}
 
-	// Shuffles the row order with a buddy matrix 
+	// Shuffles the row order with a buddy matrix
 	void shuffle(Random rand, Matrix buddy) {
 		for (int n = rows(); n > 0; n--) {
 			int i = rand.nextInt(n);
