@@ -23,7 +23,7 @@ It is written and maintained by Scott Leland Crossen.
 To start your machine learning program:
 1. Make sure that the program 'docker-compose' is installed on your machine.
 2. Clone this repository
-3. Navigate to the 'docker' Folder
+3. Navigate to the 'docker' folder
 4. Use the command ```docker-compose up``` to start the cluster
 5. Additionally, you can attach to individual containers with the command ```docker-compose exec [container_name] bash```
 
