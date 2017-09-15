@@ -4,6 +4,7 @@ function finish {
 	if [ $PID1 -ge 0 ]; then
 		kill $PID1
 	fi
+  kill $PID2
 }
 
 trap 'finish' SIGTERM
@@ -22,6 +23,7 @@ while true; do
 	java -jar ${JAR_NAME} &
   PID1=$!
   inotifywait -e modify -e delete -e create -e attrib ${JAR_NAME}
-done
+done &
+PID2=$!
 
 wait
