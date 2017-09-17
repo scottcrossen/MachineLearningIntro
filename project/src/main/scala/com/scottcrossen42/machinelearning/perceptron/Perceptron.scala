@@ -3,14 +3,15 @@ package com.scottcrossen42.machinelearning.perceptron
 import edu.byu.cs478.toolkit.SupervisedLearner
 import edu.byu.cs478.toolkit.Matrix
 import scala.math.{sqrt, floor}
+import java.util.Random
 
-class Perceptron extends SupervisedLearner {
+class Perceptron(rand: Random) extends SupervisedLearner {
 
   implicit def arrayToList[A](a: Array[A]) = a.toList
 
   private[this] val initialWeight = 1
 
-  private[this] val trainingConstant = 1
+  private[this] val trainingConstant = rand.nextDouble;
 
   // column of label, pairing of label, weight vector
   private[this] var allWeightVector: Array[List[List[Double]]] = Array()

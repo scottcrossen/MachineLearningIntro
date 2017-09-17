@@ -19,7 +19,7 @@ public class MLSystemManager {
 	public SupervisedLearner getLearner(String model, Random rand) throws Exception
 	{
 		if (model.equals("baseline")) return new BaselineLearner();
-		 else if (model.equals("perceptron")) return new Perceptron();
+		 else if (model.equals("perceptron")) return new Perceptron(rand);
 		// else if (model.equals("neuralnet")) return new NeuralNet(rand);
 		// else if (model.equals("decisiontree")) return new DecisionTree();
 		// else if (model.equals("knn")) return new InstanceBasedLearner();
