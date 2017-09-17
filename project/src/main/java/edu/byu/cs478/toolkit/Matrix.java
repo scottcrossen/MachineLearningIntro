@@ -213,8 +213,6 @@ public class Matrix {
 
 	// Returns the name of the specified value
 	public String attrValue(int attr, int val) { return m_enum_to_str.get(attr).get(val); }
-
-	// Returns the name of the specified value
 	public int attrValue(int attr, String val) { return m_str_to_enum.get(attr).get(val); }
 
 	// Returns the number of values associated with the specified attribute (or column)

@@ -17,7 +17,7 @@ public abstract class SupervisedLearner {
 	// A feature vector goes in. A label vector comes out. (Some supervised
 	// learning algorithms only support one-dimensional label vectors. Some
 	// support multi-dimensional label vectors.)
-	public abstract void predict(double[] features, double[] labels) throws Exception;
+	public abstract double[] predict(double[] features) throws Exception;
 
 	// The model must be trained before you call this method. If the label is nominal,
 	// it returns the predictive accuracy. If the label is continuous, it returns
@@ -42,9 +42,7 @@ public abstract class SupervisedLearner {
 			{
 				double[] feat = features.row(i);
 				double[] targ = labels.row(i);
-				pred[0] = 0.0; // make sure the prediction is not biassed by a previous prediction
-				predict(feat, pred);
-				double delta = targ[0] - pred[0];
+				double delta = targ[0] - predict(feat)[0];
 				sse += (delta * delta);
 			}
 			return Math.sqrt(sse / features.rows());
@@ -59,15 +57,13 @@ public abstract class SupervisedLearner {
 					confusion.setAttrName(i, labels.attrValue(0, i));
 			}
 			int correctCount = 0;
-			double[] prediction = new double[1];
 			for(int i = 0; i < features.rows(); i++)
 			{
 				double[] feat = features.row(i);
 				int targ = (int)labels.get(i, 0);
 				if(targ >= labelValues)
 					throw new Exception("The label is out of range");
-				predict(feat, prediction);
-				int pred = (int)prediction[0];
+				int pred = (int)predict(feat)[0];
 				if(confusion != null)
 					confusion.set(targ, pred, confusion.get(targ, pred) + 1);
 				if(pred == targ)

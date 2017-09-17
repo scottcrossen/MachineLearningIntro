@@ -14,9 +14,13 @@ public class Main {
       System.out.println("===================================");
       System.out.println("Monitor calling test methods");
       try {
-        String[] managerArgs = {"-L", "baseline", "-A", dataDir + "iris.arff", "-E", "training"};
-        manager.main(managerArgs);
-        TimeUnit.SECONDS.sleep(5);
+        String[] managerArgs1 = {"-L", "baseline", "-A", dataDir + "iris.arff", "-E", "training"};
+        manager.main(managerArgs1);
+        String[] managerArgs2 = {"-L", "perceptron", "-A", dataDir + "custom1.arff", "-E", "training"};
+        manager.main(managerArgs2);
+        String[] managerArgs3 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "training"};
+        manager.main(managerArgs3);
+        TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;
       }
