@@ -11,38 +11,40 @@ class Perceptron(rand: Random) extends SupervisedLearner {
 
   private[this] val initialWeight = 1
 
-  private[this] val trainingConstant = rand.nextDouble;
+  private[this] val trainingConstant = rand.nextDouble
 
   // column of label, pairing of label, weight vector
   private[this] var allWeightVector: Array[List[List[Double]]] = Array()
 
   private[this] var allDistinctVals: Array[List[Int]] = Array()
 
-	def train(features: Matrix, labels: Matrix): Unit = (0 to labels.cols - 1).foreach { colNum: Int =>
-    val (newWeightVector, newDistinctVals) = (if (labels.valueCount(colNum) == 0) {
-      (List(), List())
-    } else {
-      val distinctVals = labels.uniqVals(colNum).toList.map(labels.attrValue(colNum, _))
-      val amntValues = distinctVals.size
-      val amntPairings = (amntValues - 1) * (amntValues) / 2
-      val weightVector = (0 to amntPairings - 1).map { iter: Int =>
-        val (pair1: Int, pair2: Int) = unHash(distinctVals, iter)
-        require(features.rows == labels.rows)
-        val goodRows = (0 to features.rows - 1).filter((rowNum) => (labels.get(rowNum, colNum) == pair1 || labels.get(rowNum, colNum) == pair2)).toList
-        val featureCols = features.cols + (features.cols - 1) * (features.cols) / 2
-        goodRows.foldLeft(List.fill(featureCols)(initialWeight * 1.0)) { (soFar: List[Double], rowNum: Int) =>
-          val expected = if (labels.get(rowNum, colNum) == pair1) 1 else 0
-          applyEpoch(
-            addTerms(features.row(rowNum)),
-            expected,
-            soFar,
-            trainingConstant)
-        }
-      }.toList
-      (weightVector, distinctVals)
-    })
-    allDistinctVals = allDistinctVals :+ newDistinctVals
-    allWeightVector = allWeightVector :+ newWeightVector
+	def train(features: Matrix, labels: Matrix): Unit = {
+    (0 to labels.cols - 1).foreach { colNum: Int =>
+      val (newWeightVector, newDistinctVals) = (if (labels.valueCount(colNum) == 0) {
+        (List(), List())
+      } else {
+        val distinctVals = labels.uniqVals(colNum).toList.map(labels.attrValue(colNum, _))
+        val amntValues = distinctVals.size
+        val amntPairings = (amntValues - 1) * (amntValues) / 2
+        val weightVector = (0 to amntPairings - 1).map { iter: Int =>
+          val (pair1: Int, pair2: Int) = unHash(distinctVals, iter)
+          require(features.rows == labels.rows)
+          val goodRows = (0 to features.rows - 1).filter((rowNum) => (labels.get(rowNum, colNum) == pair1 || labels.get(rowNum, colNum) == pair2)).toList
+          val featureCols = features.cols + /*(features.cols - 1) * (features.cols) / 2*/ + 1
+          goodRows.foldLeft(List.fill(featureCols)(initialWeight * 1.0)) { (soFar: List[Double], rowNum: Int) =>
+            val expected = if (labels.get(rowNum, colNum) == pair1) 1 else 0
+            applyEpoch(
+              addTerms(features.row(rowNum)),
+              expected,
+              soFar,
+              trainingConstant)
+          }
+        }.toList
+        (weightVector, distinctVals)
+      })
+      allDistinctVals = allDistinctVals :+ newDistinctVals
+      allWeightVector = allWeightVector :+ newWeightVector
+    }
   }
 
   def unHash[A](distinctVals: List[A], iter: Integer): (A, A) = {
@@ -54,29 +56,33 @@ class Perceptron(rand: Random) extends SupervisedLearner {
     return (distinctVals(pos1), distinctVals(pos2))
   }
 
-	def predict(features: Array[Double]): Array[Double] = (0 to allDistinctVals.size - 1).map { colNum: Int =>
-    val distinctVals = allDistinctVals(colNum)
-    val amntValues = distinctVals.size
-    val amntPairings = (amntValues - 1) * (amntValues) / 2
-    val winners = (0 to amntPairings - 1).map{ iter =>
-      val weightVector: List[Double] = allWeightVector(colNum)(iter)
-      val (pair1: Int, pair2: Int) = unHash(distinctVals, iter)
-      if (elementMultiply(addTerms(features.toList), weightVector).sum > 0) pair1 else pair2
-    }.toList
-    distinctVals.maxBy{ x: Int =>
-      winners.count { winner: Int =>
-        winner == x
-      }
-    }.toDouble
-  }.toArray
+	def predict(features: Array[Double]): Array[Double] = {
+    val output = (0 to allDistinctVals.size - 1).map { colNum: Int =>
+      val distinctVals = allDistinctVals(colNum)
+      val amntValues = distinctVals.size
+      val amntPairings = (amntValues - 1) * (amntValues) / 2
+      val winners = (0 to amntPairings - 1).map{ iter =>
+        val weightVector: List[Double] = allWeightVector(colNum)(iter)
+        val (pair1: Int, pair2: Int) = unHash(distinctVals, iter)
+        //println(s"pair1: $pair1, pair2: $pair2 features: ${addTerms(features.toList)} weightVector: $weightVector dotProd: ${elementMultiply(addTerms(features.toList), weightVector).sum}")
+        if (elementMultiply(addTerms(features.toList), weightVector).sum > 0) pair1 else pair2
+      }.toList
+      distinctVals.maxBy{ x: Int =>
+        winners.count { winner: Int =>
+          winner == x
+        }
+      }.toDouble
+    }.toArray
+    return output
+  }
 
   private[this] def addTerms(pattern: List[Double]): List[Double] = {
-    val amntPairings = (pattern.size - 1) * (pattern.size) / 2
+    /*val amntPairings = (pattern.size - 1) * (pattern.size) / 2
     val append = (0 to amntPairings - 1).map { iter =>
       val (pair1, pair2) = unHash(pattern, iter)
       pair1 * pair2
-    }.toList
-    return pattern ++ append
+    }.toList*/
+    return pattern /*++ append*/ ++ List(1.0)
   }
 
   private[this] def applyEpoch(pattern: List[Double], expected: Double, weightVector: List[Double], trainingConstant: Double): List[Double] = {
