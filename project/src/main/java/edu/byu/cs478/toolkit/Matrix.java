@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Iterator;
+import java.util.Set;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.Exception;
@@ -190,35 +191,50 @@ public class Matrix {
 	}
 
 	// Returns the number of rows in the matrix
-	int rows() { return m_data.size(); }
+	public int rows() { return m_data.size(); }
 
 	// Returns the number of columns (or attributes) in the matrix
-	int cols() { return m_attr_name.size(); }
+	public int cols() { return m_attr_name.size(); }
 
 	// Returns the specified row
-	double[] row(int r) { return m_data.get(r); }
+	public double[] row(int r) { return m_data.get(r); }
 
 	// Returns the element at the specified row and column
-	double get(int r, int c) { return m_data.get(r)[c]; }
+	public double get(int r, int c) { return m_data.get(r)[c]; }
 
 	// Sets the value at the specified row and column
-	void set(int r, int c, double v) { row(r)[c] = v; }
+	public void set(int r, int c, double v) { row(r)[c] = v; }
 
 	// Returns the name of the specified attribute
-	String attrName(int col) { return m_attr_name.get(col); }
+	public String attrName(int col) { return m_attr_name.get(col); }
 
 	// Set the name of the specified attribute
-	void setAttrName(int col, String name) { m_attr_name.set(col, name); }
+	public void setAttrName(int col, String name) { m_attr_name.set(col, name); }
 
 	// Returns the name of the specified value
-	String attrValue(int attr, int val) { return m_enum_to_str.get(attr).get(val); }
+	public String attrValue(int attr, int val) { return m_enum_to_str.get(attr).get(val); }
+
+	// Returns the name of the specified value
+	public int attrValue(int attr, String val) { return m_str_to_enum.get(attr).get(val); }
 
 	// Returns the number of values associated with the specified attribute (or column)
 	// 0=continuous, 2=binary, 3=trinary, etc.
-	int valueCount(int col) { return m_enum_to_str.get(col).size(); }
+	public int valueCount(int col) { return m_enum_to_str.get(col).size(); }
+
+  public String[] uniqVals(int col) {
+    Set<Integer> keySet = m_enum_to_str.get(col).keySet();
+    Iterator<Integer> iter = keySet.iterator();
+    String[] result = new String[keySet.size()];
+    int i=0;
+    while (iter.hasNext()) {
+      result[i] = m_enum_to_str.get(col).get(iter.next());
+      i++;
+    }
+    return result;
+  }
 
 	// Shuffles the row order
-	void shuffle(Random rand) {
+	public void shuffle(Random rand) {
 		for(int n = rows(); n > 0; n--) {
 			int i = rand.nextInt(n);
 			double[] tmp = row(n - 1);
@@ -228,7 +244,7 @@ public class Matrix {
 	}
 
 	// Shuffles the row order with a buddy matrix
-	void shuffle(Random rand, Matrix buddy) {
+	public void shuffle(Random rand, Matrix buddy) {
 		for (int n = rows(); n > 0; n--) {
 			int i = rand.nextInt(n);
 			double[] tmp = row(n - 1);
@@ -243,7 +259,7 @@ public class Matrix {
 	}
 
 	// Returns the mean of the specified column
-	double columnMean(int col) {
+	public double columnMean(int col) {
 		double sum = 0;
 		int count = 0;
 		for(int i = 0; i < rows(); i++) {
@@ -258,7 +274,7 @@ public class Matrix {
 	}
 
 	// Returns the min value in the specified column
-	double columnMin(int col) {
+	public double columnMin(int col) {
 		double m = MISSING;
 		for(int i = 0; i < rows(); i++) {
 			double v = get(i, col);
@@ -272,7 +288,7 @@ public class Matrix {
 	}
 
 	// Returns the max value in the specified column
-	double columnMax(int col) {
+	public double columnMax(int col) {
 		double m = MISSING;
 		for(int i = 0; i < rows(); i++) {
 			double v = get(i, col);
@@ -286,7 +302,7 @@ public class Matrix {
 	}
 
 	// Returns the most common value in the specified column
-	double mostCommonValue(int col) {
+	public double mostCommonValue(int col) {
 		TreeMap<Double, Integer> tm = new TreeMap<Double, Integer>();
 		for(int i = 0; i < rows(); i++) {
 			double v = get(i, col);
@@ -314,7 +330,7 @@ public class Matrix {
 		return val;
 	}
 
-	void normalize() {
+	public void normalize() {
 		for(int i = 0; i < cols(); i++) {
 			if(valueCount(i) == 0) {
 				double min = columnMin(i);
@@ -328,7 +344,7 @@ public class Matrix {
 		}
 	}
 
-	void print() {
+	public void print() {
 		System.out.println("@RELATION Untitled");
 		for(int i = 0; i < m_attr_name.size(); i++) {
 			System.out.print("@ATTRIBUTE " + m_attr_name.get(i));
