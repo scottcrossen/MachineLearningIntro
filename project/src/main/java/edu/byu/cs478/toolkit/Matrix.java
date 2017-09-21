@@ -30,14 +30,16 @@ public class Matrix {
 	public Matrix() {}
 
 	// Copies the specified portion of that matrix into this matrix
-	public Matrix(Matrix that, int rowStart, int colStart, int rowCount, int colCount) {
+	public Matrix(Matrix that, int rowStart, int colStart, int rowCount, int colCount, Set goodRows) {
 		m_data = new ArrayList< double[] >();
 		for(int j = 0; j < rowCount; j++) {
-			double[] rowSrc = that.row(rowStart + j);
-			double[] rowDest = new double[colCount];
-			for(int i = 0; i < colCount; i++)
-				rowDest[i] = rowSrc[colStart + i];
-			m_data.add(rowDest);
+      if (goodRows.contains(j)) {
+  			double[] rowSrc = that.row(rowStart + j);
+  			double[] rowDest = new double[colCount];
+  			for(int i = 0; i < colCount; i++)
+  				rowDest[i] = rowSrc[colStart + i];
+  			m_data.add(rowDest);
+      }
 		}
 		m_attr_name = new ArrayList<String>();
 		m_str_to_enum = new ArrayList< TreeMap<String, Integer> >();
@@ -48,6 +50,26 @@ public class Matrix {
 			m_enum_to_str.add(that.m_enum_to_str.get(colStart + i));
 		}
 	}
+
+  // Copies the specified portion of that matrix into this matrix
+  public Matrix(Matrix that, int rowStart, int colStart, int rowCount, int colCount) {
+    m_data = new ArrayList< double[] >();
+    for(int j = 0; j < rowCount; j++) {
+      double[] rowSrc = that.row(rowStart + j);
+      double[] rowDest = new double[colCount];
+      for(int i = 0; i < colCount; i++)
+        rowDest[i] = rowSrc[colStart + i];
+      m_data.add(rowDest);
+    }
+    m_attr_name = new ArrayList<String>();
+    m_str_to_enum = new ArrayList< TreeMap<String, Integer> >();
+    m_enum_to_str = new ArrayList< TreeMap<Integer, String> >();
+    for(int i = 0; i < colCount; i++) {
+      m_attr_name.add(that.attrName(colStart + i));
+      m_str_to_enum.add(that.m_str_to_enum.get(colStart + i));
+      m_enum_to_str.add(that.m_enum_to_str.get(colStart + i));
+    }
+  }
 
 	// Adds a copy of the specified portion of that matrix to this matrix
 	public void add(Matrix that, int rowStart, int colStart, int rowCount) throws Exception {

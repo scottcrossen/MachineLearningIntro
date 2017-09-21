@@ -1,0 +1,12 @@
+@RELATION custom0
+
+@ATTRIBUTE fact1	Continuous
+@ATTRIBUTE fact2 	Continuous
+@ATTRIBUTE fact3 	Continuous
+@ATTRIBUTE class 	{True,False}
+
+@DATA
+1.0,0.0,1.0,False
+1.0,1.0,0.0,False
+1.0,0.0,1.0,True
+0.0,1.0,1.0,True
