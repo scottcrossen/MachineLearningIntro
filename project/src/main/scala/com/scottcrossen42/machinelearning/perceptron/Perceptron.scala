@@ -16,7 +16,7 @@ class Perceptron(rand: Random) extends SupervisedLearner {
 
   private[this] val threshold = 1
 
-  private[this] val matchedPairsMethod = false
+  private[this] val matchedPairsMethod = true
 
   private[this] val maxEpochs = 100
 
@@ -132,13 +132,13 @@ class Perceptron(rand: Random) extends SupervisedLearner {
 
   private[this] def applyManyEpochs(colNum: Int, features: Matrix, labels: Matrix, correctPair: Int): List[Double] = {
     val startingWeight: Option[List[Double]] = None
-    val (outputWeightVector: Option[List[Double]], _) = (0 to maxEpochs - 1).foldRight((startingWeight, 0)) { (iter: Int, soFar: Tuple2[Option[List[Double]], Int]) =>
+    val (outputWeightVector: Option[List[Double]], _) = (0 to maxEpochs - 1).foldLeft((startingWeight, 0)) { (soFar: Tuple2[Option[List[Double]], Int], iter: Int) =>
       if (iter > 0) features.shuffle(rand, labels)
       val newWeightVector = trainOnAll(colNum, features, labels, correctPair)
-      val noChange: Boolean = soFar._1.map(lastWeight => elementSubtract(newWeightVector, lastWeight).sum < newWeightVector.size * trainingConstant * 0.5).getOrElse(false)
+      val noChange: Boolean = soFar._1.map(lastWeight => elementSubtract(newWeightVector, lastWeight).sum < newWeightVector.size * trainingConstant * 0.2).getOrElse(false)
       if (noChange) {
         if (soFar._2 > 4) {
-          if (verbose) println(s"Ending training early. Weight vector changed less than ${newWeightVector.size * trainingConstant * 0.5} for 5 successive epochs on epoch #$iter")
+          if (verbose) println(s"Ending training early. Weight vector changed less than ${newWeightVector.size * trainingConstant * 0.2} for 5 successive epochs on epoch #$iter")
           return newWeightVector
         } else {
           (Some(newWeightVector), soFar._2 + 1)

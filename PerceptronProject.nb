@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    117378,       2765]
-NotebookOptionsPosition[    110558,       2587]
-NotebookOutlinePosition[    110893,       2602]
-CellTagsIndexPosition[    110850,       2599]
+NotebookDataLength[    137924,       3072]
+NotebookOptionsPosition[    133268,       2950]
+NotebookOutlinePosition[    133603,       2965]
+CellTagsIndexPosition[    133560,       2962]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -132,37 +132,6 @@ Cell["Part 1", "Subsection",
   3.714958413911687*^9}},ExpressionUUID->"21490b9f-e51a-4842-b44f-\
 bc0994bb71f3"],
 
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"5884fc4f-3c25-49b0-b27b-\
-4071ec2ecafe"],
-
-Cell["\<\
-1.  (40%) Correctly implement the perceptron learning algorithm.  For this \
-and the following projects, you should integrate the learning algorithm with \
-the tool kit or with your variation of the tool kit if you do your own.  \
-Before implementing your perceptron and other projects, you should review \
-requirements for the project so that you implement it in a way that will \
-support them all. Note that for this and the other labs it is not always easy \
-to tell if you have implemented the model exactly correct, since training \
-sets, initial parameters, etc. usually have a random aspect. However, it is \
-easy to see when your results are inconsistent with reasonable results, and \
-points will be reduced based on how far off your implementation appears to be.\
-\>", "Text",
- CellChangeTimes->{
-  3.714958521942761*^9},ExpressionUUID->"e408f643-abec-47b7-bbc6-\
-514e3faf937d"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"09e10101-41e9-4100-818c-\
-993c53a7fdac"],
-
 Cell["\<\
 The code that implements the perceptron rule is included with the submission \
 of this project. It is written in Scala and follows the functional paradigm.\
@@ -171,7 +140,6 @@ of this project. It is written in Scala and follows the functional paradigm.\
   3.714958760316622*^9, 
   3.7149587611832123`*^9}},ExpressionUUID->"3ff43389-b5e8-4fac-a26e-\
 054a6326d0bf"]
-}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -181,31 +149,6 @@ Cell["Part 2", "Subsection",
   3.714958411848822*^9, 3.714958413911687*^9}, {3.714958595230852*^9, 
   3.71495859546497*^9}},ExpressionUUID->"3ddd2150-db23-4459-9716-\
 b497c3ceb0a1"],
-
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"ba947ffc-b905-4570-888d-\
-c7bb185fc8fe"],
-
-Cell["\<\
-2.  (5%) Create 2 ARFF files, both with 8 instances using 2 real valued \
-inputs (which range between -1 and 1) each with 4 instances from each class.  \
-One should be linearly separable and the other not.  Include these two ARFF \
-files in your report.\
-\>", "Text",
- CellChangeTimes->{
-  3.714958677199786*^9},ExpressionUUID->"cb2d0dbb-7255-48e5-a910-\
-bc6362d93878"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"98936158-3468-4e4c-8ca2-\
-5dd6704f8ff5"],
 
 Cell[TextData[{
  "Below are the true constructed ARFF files. the first is linearly separable \
@@ -284,7 +227,6 @@ and the second is not.\n\n",
    3.7150118025716248`*^9, 
    3.715011845556642*^9}},ExpressionUUID->"9e4c9b0a-b3fe-465f-8ee2-\
 6ec3151d82df"]
-}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -295,61 +237,34 @@ Cell["Part 3", "Subsection",
   3.7149585972687674`*^9}},ExpressionUUID->"fdbde836-5af2-423b-89a3-\
 08361e367d76"],
 
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"454d9762-5456-4bb6-b22a-\
-8ca7367a8b19"],
-
-Cell["\<\
-3.  (10%) Train on both sets (the entire sets) with the Perceptron Rule. Try \
-it with a couple different learning rates and discuss the effect of learning \
-rate, including how many epochs are completed before stopping.  (For these \
-situations learning rate should have minimal effect, unlike with the \
-Backpropagation lab).
-
-The basic stopping criteria for many models is to stop training when no \
-longer making significant progress.  Most commonly, when you have gone a \
-number of epochs (e.g. 5) with no significant improvement in accuracy (Note \
-that the weights/accuracy do not usually change monotonically).  Describe \
-your specific stopping criteria.  Don\[CloseCurlyQuote]t just stop the first \
-epoch when no improvement occurs.  Use a learning rate of .1 for experiments \
-4-6 below.\
-\>", "Text",
- CellChangeTimes->{{3.714958699246118*^9, 3.714958709568293*^9}, 
-   3.71495874522235*^9},ExpressionUUID->"abd1eb25-64a8-4b18-b517-\
-d63616c3bb5a"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"b3148bb9-6680-4d17-86b8-\
-60574da4d4d1"],
-
 Cell[TextData[{
  "For the purposes of this project, the stopping criteria is considered to be \
 ",
  StyleBox["fulfilled",
   IgnoreSpellCheck->True],
  " when a continuous 5 epochs of the training set improved the weight vector \
-by less than a cumulative 1.5 (half of the amount of features) times the \
-learning constant.\n\nThe results show that the learning constant doesn\
-\[CloseCurlyQuote]t really affect the amount of time it takes to train the \
-perceptron. Data is given below showing the amount of epochs it takes to \
-converge vs the learning constant. For a given single learning constant it \
-was observed that a larger learning constant resulted in a more sporadic \
-change in the weight vector whereas a smaller learning constant was more \
-gradual in achieving the optimal solution."
+by less than a cumulative 1.5 (half of the amount of features) across the \
+feature vector times the learning constant. This value was chosen so that a \
+smaller learning constant would be taken into account and allow the algorithm \
+to arrive at a more precise result. Moreover, under this value a larger \
+feature set allows more ability for the algorithm to change before stopping. \
+This is why the overall equation is written this way.\n\nThe results show \
+that the learning constant doesn\[CloseCurlyQuote]t really affect the amount \
+of time it takes to train the perceptron. Data is given below showing the \
+amount of epochs it takes to converge vs the learning constant. For a given \
+single learning constant it was observed that a larger learning constant \
+resulted in more sporadic changes in the weight vector whereas a smaller \
+learning constant was more gradual in achieving the optimal solution. This of \
+course is probably a result of the more-volatile nature of a larger training \
+constant."
 }], "Text",
  CellChangeTimes->{{3.714959555147458*^9, 3.714959650487754*^9}, {
   3.714960488036628*^9, 3.714960666793393*^9}, {3.71500432677074*^9, 
   3.715004412245297*^9}, {3.71501227596731*^9, 3.715012305137197*^9}, {
   3.7150123540562477`*^9, 3.715012391863925*^9}, {3.7150130364258547`*^9, 
-  3.715013170160192*^9}, {3.715014325550577*^9, 
-  3.715014335345497*^9}},ExpressionUUID->"ea271a57-f77f-4bab-889f-\
+  3.715013170160192*^9}, {3.715014325550577*^9, 3.715014335345497*^9}, {
+  3.7150200082542143`*^9, 3.7150203073825073`*^9}, {3.7150206297074537`*^9, 
+  3.715020667157202*^9}},ExpressionUUID->"ea271a57-f77f-4bab-889f-\
 a707165ccc56"],
 
 Cell[CellGroupData[{
@@ -426,7 +341,8 @@ Cell[BoxData[{
      "\"\<Lineraly Seperable\>\"", ",", " ", 
       "\"\<Nonlineraly Seperable\>\""}], "}"}]}]}], "]"}]}], "Input",
  CellChangeTimes->{{3.7150123932981253`*^9, 3.715013024165003*^9}, 
-   3.715014516226963*^9},ExpressionUUID->"6509cbcc-8f53-46a1-b302-\
+   3.715014516226963*^9, {3.715020575526539*^9, 
+   3.715020590229597*^9}},ExpressionUUID->"6509cbcc-8f53-46a1-b302-\
 39437e4aaf9c"],
 
 Cell[BoxData[
@@ -592,11 +508,12 @@ Cell[BoxData[
                     True, FrameStyle -> RGBColor[0., 0., 0.6666666666666666], 
                     FrameTicks -> None, PlotRangePadding -> None, ImageSize -> 
                     Dynamic[{
-                    Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}]], 
-                    "RGBColor[0, 0, 1]"], Appearance -> None, BaseStyle -> {},
-                     BaselinePosition -> Baseline, DefaultBaseStyle -> {}, 
-                    ButtonFunction :> With[{Typeset`box$ = EvaluationBox[]}, 
+                    Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], "RGBColor[0, 0, 1]"], Appearance -> 
+                    None, BaseStyle -> {}, BaselinePosition -> Baseline, 
+                    DefaultBaseStyle -> {}, ButtonFunction :> 
+                    With[{Typeset`box$ = EvaluationBox[]}, 
                     If[
                     Not[
                     AbsoluteCurrentValue["Deployed"]], 
@@ -633,11 +550,12 @@ Cell[BoxData[
                     True, FrameStyle -> RGBColor[0.6666666666666666, 0., 0.], 
                     FrameTicks -> None, PlotRangePadding -> None, ImageSize -> 
                     Dynamic[{
-                    Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}]], 
-                    "RGBColor[1, 0, 0]"], Appearance -> None, BaseStyle -> {},
-                     BaselinePosition -> Baseline, DefaultBaseStyle -> {}, 
-                    ButtonFunction :> With[{Typeset`box$ = EvaluationBox[]}, 
+                    Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], "RGBColor[1, 0, 0]"], Appearance -> 
+                    None, BaseStyle -> {}, BaselinePosition -> Baseline, 
+                    DefaultBaseStyle -> {}, ButtonFunction :> 
+                    With[{Typeset`box$ = EvaluationBox[]}, 
                     If[
                     Not[
                     AbsoluteCurrentValue["Deployed"]], 
@@ -695,7 +613,6 @@ Cell[BoxData[
    3.715014516793871*^9},ExpressionUUID->"d79c10a9-5839-43ac-8d66-\
 98ce18cd0449"]
 }, {2}]]
-}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -706,34 +623,14 @@ Cell["Part 4", "Subsection",
   3.714958599574787*^9}},ExpressionUUID->"609ef771-07dc-40f6-b426-\
 8cfc5143ea17"],
 
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"0eec54bc-a087-4952-b63e-\
-248d05e2f153"],
-
 Cell["\<\
-4. (10%) Graph the instances and decision line for the two cases above (with \
-LR=.1). For all graphs always label the axes!\
+The below plots show the two different solutions to the above ARFF files. The \
+first shows a correct separation of the data and the second shows a poor \
+separation of the data (because it is not linearly separable)\
 \>", "Text",
- CellChangeTimes->{
-  3.714958716118338*^9},ExpressionUUID->"68675f81-d68d-4887-9e17-\
-aa1689490d52"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"5d9c8b89-18b5-42c0-965d-\
-4ffca65073ff"],
-
-Cell["\<\
-The below plots show the two different solutions to the above ARFF files.\
-\>", "Text",
- CellChangeTimes->{{3.715014377268531*^9, 
-  3.7150144200376797`*^9}},ExpressionUUID->"6f97dc2d-a312-4b34-bde8-\
+ CellChangeTimes->{{3.715014377268531*^9, 3.7150144200376797`*^9}, {
+  3.7150206786126547`*^9, 
+  3.71502072455492*^9}},ExpressionUUID->"6f97dc2d-a312-4b34-bde8-\
 cf079c2b8a9f"],
 
 Cell[CellGroupData[{
@@ -975,10 +872,11 @@ Cell[BoxData[
                     True, FrameStyle -> GrayLevel[0.], FrameTicks -> None, 
                     PlotRangePadding -> None, ImageSize -> 
                     Dynamic[{
-                    Automatic, 1.35 CurrentValue["FontCapHeight"]/
-                    AbsoluteCurrentValue[Magnification]}]], "GrayLevel[0]"], 
-                   Appearance -> None, BaseStyle -> {}, BaselinePosition -> 
-                   Baseline, DefaultBaseStyle -> {}, ButtonFunction :> 
+                    Automatic, 
+                    1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], "GrayLevel[0]"], Appearance -> None, 
+                   BaseStyle -> {}, BaselinePosition -> Baseline, 
+                   DefaultBaseStyle -> {}, ButtonFunction :> 
                    With[{Typeset`box$ = EvaluationBox[]}, 
                     If[
                     Not[
@@ -1234,7 +1132,6 @@ Cell[BoxData[
    3.7150117808889523`*^9},ExpressionUUID->"c0c1d58d-7201-4ccd-bdd5-\
 b125ac271717"]
 }, {2, 3}]]
-}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1245,49 +1142,13 @@ Cell["Part 5", "Subsection",
   3.714958601546626*^9}},ExpressionUUID->"c1b8ef4d-15ce-452c-a9c8-\
 cb156040fe33"],
 
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"28e89f4f-367f-4395-a443-\
-8709ff7c1060"],
-
-Cell["\<\
-5. (20%) Use the perceptron rule to learn this version of the voting task.  \
-This particular task is an edited version of the standard voting set, where \
-we have replaced all the \[OpenCurlyDoubleQuote]don\[CloseCurlyQuote]t know\
-\[CloseCurlyDoubleQuote] values with the most common value for the particular \
-attribute.  Randomly split the data into 70% training and 30% test set.  Try \
-it five times with different random 70/30 splits.  For each split report the \
-final training and test set accuracy and the # of epochs required.  Also \
-report the average of these values from the 5 trials.  You should update \
-after every instance.  Remember to shuffle the data order after each epoch.  \
-By looking at the weights, explain what the model has learned and how the \
-individual input features affect the result.  Which specific features are \
-most critical for the voting task, and which are least critical?  Do one \
-graph of the average misclassification rate vs epochs (0th \[Dash] final \
-epoch) for the training set. In our helps page is some help for doing graphs. \
- As a rough sanity check, typical Perceptron accuracies for the voting data \
-set are 90%-98%.\
-\>", "Text",
- CellChangeTimes->{
-  3.7149587220364637`*^9},ExpressionUUID->"d5679ac8-041c-49ea-beb7-\
-0617324c9600"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"830b0ebb-00c1-4231-bc59-\
-d7ab958b9af9"],
-
 Cell["\<\
 For a perceptron that is forced to train on all the data we found an accuracy \
-in the 90s.\
+in the 90s. The plots below show the results for 5 trials.\
 \>", "Text",
- CellChangeTimes->{{3.714998364828912*^9, 
-  3.7149984154747562`*^9}},ExpressionUUID->"65614d1c-218a-44c5-af71-\
+ CellChangeTimes->{{3.714998364828912*^9, 3.7149984154747562`*^9}, {
+  3.7150203137325563`*^9, 
+  3.715020325489697*^9}},ExpressionUUID->"65614d1c-218a-44c5-af71-\
 3469c435ec16"],
 
 Cell[CellGroupData[{
@@ -1298,19 +1159,19 @@ Cell[BoxData[{
    RowBox[{"{", 
     RowBox[{
      RowBox[{"{", 
-      RowBox[{"85", ",", "0.9285714285714286", ",", "0.8992805755395683"}], 
+      RowBox[{"15", ",", "0.9285714285714286", ",", "0.8992805755395683"}], 
       "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"93", ",", "0.9316770186335404", ",", "0.9205035971223022"}], 
+      RowBox[{"20", ",", "0.9316770186335404", ",", "0.9205035971223022"}], 
       "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"72", ",", "0.922360248447205", ",", "0.9280575539568345"}], 
+      RowBox[{"7", ",", "0.922360248447205", ",", "0.9280575539568345"}], 
       "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"91", ",", "0.9347826086956522", ",", "0.920863309352518"}], 
+      RowBox[{"18", ",", "0.9347826086956522", ",", "0.920863309352518"}], 
       "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"93", ",", "0.9658385093167702", ",", "0.9424460431654677"}], 
+      RowBox[{"20", ",", "0.9658385093167702", ",", "0.9424460431654677"}], 
       "}"}]}], "}"}]}], ";"}], "\n", 
  RowBox[{"ListPlot", "[", 
   RowBox[{
@@ -1392,7 +1253,9 @@ Cell[BoxData[{
   3.71500472102286*^9, 3.7150047219528437`*^9}, {3.715013306773569*^9, 
   3.715013340399158*^9}, {3.715013460306184*^9, 3.7150136600585747`*^9}, {
   3.7150136973363867`*^9, 3.715013710129059*^9}, {3.715013740494735*^9, 
-  3.715013846819005*^9}},ExpressionUUID->"7447e06c-e6a1-4997-bdbc-\
+  3.715013846819005*^9}, {3.7150186149311857`*^9, 3.715018645652615*^9}, {
+  3.715020446207321*^9, 
+  3.715020471222643*^9}},ExpressionUUID->"7447e06c-e6a1-4997-bdbc-\
 1173b5dc2f85"],
 
 Cell[BoxData[
@@ -1408,9 +1271,9 @@ Cell[BoxData[
            FormBox[
             StyleBox[
             "\[FilledCircle]", FontSize -> 10, StripOnInput -> False], 
-            TraditionalForm]], {0., 0.}], {{{85., 0.9285714285714286}}, {{93.,
-          0.9316770186335404}}, {{72., 0.922360248447205}}, {{91., 
-         0.9347826086956522}}, {{93., 0.9658385093167702}}}]}, {
+            TraditionalForm]], {0., 0.}], {{{15., 0.9285714285714286}}, {{20.,
+          0.9316770186335404}}, {{7., 0.922360248447205}}, {{18., 
+         0.9347826086956522}}, {{20., 0.9658385093167702}}}]}, {
         Directive[
          PointSize[0.012833333333333334`], 
          AbsoluteThickness[1.6], 
@@ -1422,16 +1285,16 @@ Cell[BoxData[
            FormBox[
             StyleBox[
             "\[FilledCircle]", FontSize -> 10, StripOnInput -> False], 
-            TraditionalForm]], {0., 0.}], {{{85., 0.8992805755395683}}, {{93.,
-          0.9205035971223022}}, {{72., 0.9280575539568345}}, {{91., 
-         0.920863309352518}}, {{93., 
+            TraditionalForm]], {0., 0.}], {{{15., 0.8992805755395683}}, {{20.,
+          0.9205035971223022}}, {{7., 0.9280575539568345}}, {{18., 
+         0.920863309352518}}, {{20., 
          0.9424460431654677}}}]}, {}}}, {}, {}, {{}, {}}, {{}, {}}}, {
     DisplayFunction -> Identity, PlotRangePadding -> {{
         Scaled[0.02], 
         Scaled[0.02]}, {
         Scaled[0.05], 
-        Scaled[0.05]}}, AxesOrigin -> {71.67187500000001, 0.8959526788507084},
-      PlotRange -> {{72., 93.}, {0.8992805755395683, 0.9658385093167702}}, 
+        Scaled[0.05]}}, AxesOrigin -> {6.796875, 0.8959526788507084}, 
+     PlotRange -> {{7., 20.}, {0.8992805755395683, 0.9658385093167702}}, 
      PlotRangeClipping -> True, ImagePadding -> All, DisplayFunction -> 
      Identity, AspectRatio -> NCache[GoldenRatio^(-1), 0.6180339887498948], 
      Axes -> {True, True}, AxesLabel -> {
@@ -1441,7 +1304,7 @@ Cell[BoxData[
        FormBox[
         StyleBox["\"Accuracy\"", 
          GrayLevel[0], StripOnInput -> False], TraditionalForm]}, 
-     AxesOrigin -> {71.67187500000001, 0.8959526788507084}, DisplayFunction :> 
+     AxesOrigin -> {6.796875, 0.8959526788507084}, DisplayFunction :> 
      Identity, Frame -> {{False, False}, {False, False}}, 
      FrameLabel -> {{None, None}, {None, None}}, 
      FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
@@ -1458,7 +1321,7 @@ Cell[BoxData[
             Part[#, 2]]}& )}}, PlotLabel -> FormBox[
        StyleBox["\"Voting Data Perceptron\"", 
         GrayLevel[0], StripOnInput -> False], TraditionalForm], 
-     PlotRange -> {{72., 93.}, {0.8992805755395683, 0.9658385093167702}}, 
+     PlotRange -> {{7., 20.}, {0.8992805755395683, 0.9658385093167702}}, 
      PlotRangeClipping -> True, PlotRangePadding -> {{
         Scaled[0.02], 
         Scaled[0.02]}, {
@@ -1657,22 +1520,24 @@ Cell[BoxData[
        RowBox[{"Placed", "[", 
          RowBox[{#2, ",", "After"}], "]"}]}], "]"}]& )]], "Output",
  CellChangeTimes->{{3.7150133230479918`*^9, 3.715013341085881*^9}, {
-  3.715013621913699*^9, 3.715013660993651*^9}, {3.71501381259097*^9, 
-  3.715013847455165*^9}},ExpressionUUID->"e5edf785-a8ba-409f-ad4e-\
-60f0b2542f6f"],
+   3.715013621913699*^9, 3.715013660993651*^9}, {3.71501381259097*^9, 
+   3.715013847455165*^9}, {3.715018617582758*^9, 3.7150186470766907`*^9}, 
+   3.71502047164224*^9},ExpressionUUID->"d37735cc-2a43-46a6-a93f-\
+7e474207403f"],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"The average amount of epochs trained on was \"\>", 
-   "\[InvisibleSpace]", "86.8`"}],
-  SequenceForm["The average amount of epochs trained on was ", 86.8],
+   "\[InvisibleSpace]", "16.`"}],
+  SequenceForm["The average amount of epochs trained on was ", 16.],
   Editable->False]], "Print",
  CellChangeTimes->{{3.715013323049387*^9, 3.7150133410936403`*^9}, {
-  3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
-  3.7150138474635077`*^9}},ExpressionUUID->"7558a072-1e2c-47f3-9492-\
-92c3db3affd9"],
+   3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
+   3.7150138474635077`*^9}, {3.7150186175909843`*^9, 3.715018647085828*^9}, 
+   3.715020471650424*^9},ExpressionUUID->"6cbfe3d9-1434-40b8-8fb4-\
+08445f98f571"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -1681,9 +1546,10 @@ Cell[BoxData[
   SequenceForm["The average training accuracy was ", 0.9366459627329192],
   Editable->False]], "Print",
  CellChangeTimes->{{3.715013323049387*^9, 3.7150133410936403`*^9}, {
-  3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
-  3.7150138474642467`*^9}},ExpressionUUID->"5e526ff6-229a-45b8-a365-\
-e38adec407ba"],
+   3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
+   3.7150138474635077`*^9}, {3.7150186175909843`*^9, 3.715018647085828*^9}, 
+   3.7150204716509867`*^9},ExpressionUUID->"309d1f5f-68e3-423a-a08e-\
+5cb5ffa157b5"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -1692,9 +1558,10 @@ Cell[BoxData[
   SequenceForm["The average testing accuracy was ", 0.9222302158273381],
   Editable->False]], "Print",
  CellChangeTimes->{{3.715013323049387*^9, 3.7150133410936403`*^9}, {
-  3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
-  3.715013847465048*^9}},ExpressionUUID->"79f6d3af-bb1b-40b2-b0f4-\
-77479e884676"]
+   3.71501362192443*^9, 3.715013661002315*^9}, {3.715013812601379*^9, 
+   3.7150138474635077`*^9}, {3.7150186175909843`*^9, 3.715018647085828*^9}, 
+   3.7150204716515923`*^9},ExpressionUUID->"48cf61b1-daaa-452e-ad96-\
+3dfbdd9f3696"]
 }, Open  ]]
 }, {2, 3, 4, 5}]],
 
@@ -1703,22 +1570,15 @@ For this  data set a good stopping criteria was determined to be when the \
 perceptron reached 5 successive iterations of it\[CloseCurlyQuote]s data set \
 with no significant increase in the weight vector. A significant increase is \
 considered to be when the summed changed in the weight vector is more than \
-1/2 times the number of features times the training constant.\
-\>", "Text",
- CellChangeTimes->{
-  3.714998053732039*^9, {3.714999112067321*^9, 3.714999233606206*^9}, {
-   3.715013865497401*^9, 
-   3.7150138813846083`*^9}},ExpressionUUID->"ba087523-d77e-4633-8fa6-\
-ecdc328c6f5a"],
+1/2 times the number of features times the training constant. The logic \
+behind this algorithm is explained more fully in part 3 of this project.
 
-Cell["\<\
-The final weight vector for a perceptron with a test accuracy of 96 % is \
-shown below:
-{0.0, 0.47336482815648373, 1.1834120703912094, -1.6567768985476934, 0.0, \
-0.23668241407824187, -0.23668241407824187, -0.23668241407824187, \
+The final weight vector for a perceptron with a test accuracy of 96 % turns \
+out to be {0.0, 0.47336482815648373, 1.1834120703912094, -1.6567768985476934, \
+0.0, 0.23668241407824187, -0.23668241407824187, -0.23668241407824187, \
 0.9467296563129675, -0.47336482815648373, 0.7100472422347256, \
 -0.47336482815648373, 0.47336482815648373, -0.23668241407824187, \
-0.9467296563129675, -0.23668241407824187, 0.47336482815648373}
+0.9467296563129675, -0.23668241407824187, 0.47336482815648373}.
 According to this data, there is a slight offset (bias) in the data. \
 Moreover, the 3rd and 4th features seem to be the most influential with the \
 1st and 5th features being least influential. It\[CloseCurlyQuote]s important \
@@ -1726,14 +1586,557 @@ to note that not all returned weight vectors had a bias. The most-accurate \
 ones all did though. Note that the longer the perceptron was allowed to train \
 the more accurate it tended to be. This is best shown by the upward-sloping \
 trend in the above plot.
+
 Most influential features: 3, 4
-Least Influential features: 1, 5\
+Least Influential features: 1, 5
+
+Below is a plot of average misclassification rate vs epochs elapsed. It would \
+appear that not much improvement happens after the first epoch. Though the \
+graph below would have stopped much earlier than 50 epochs, I suspended the \
+halting criteria to demonstrate the misclassification rate over a longer \
+period. Again, I suspect that the misclassification rate would not be so \
+noisy if I allowed for a smaller time frame. More than that, but it is likely \
+that my perceptron was able to accurately train itself after one epoch and \
+continuing the training was just overkill.\
 \>", "Text",
  CellChangeTimes->{{3.714999484747177*^9, 3.714999612660059*^9}, {
   3.714999723999144*^9, 3.714999787228071*^9}, {3.7149998447732773`*^9, 
-  3.714999910526085*^9}},ExpressionUUID->"f6523755-1373-4f1f-bce0-\
-2404de778c70"]
-}, Open  ]]
+  3.714999910526085*^9}, {3.715019617555265*^9, 3.715019625524577*^9}, {
+  3.715020380549388*^9, 3.715020404243535*^9}, {3.715020823293771*^9, 
+  3.715020837219558*^9}},ExpressionUUID->"f6523755-1373-4f1f-bce0-\
+2404de778c70"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"data1", " ", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "100", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "0.06521739130434778", ",", "0.04347826086956519", ",", 
+        "0.10248447204968947", ",", "0.0496894409937888", ",", 
+        "0.04658385093167705", ",", "0.0496894409937888", ",", 
+        "0.03416149068322982", ",", "0.06521739130434778", ",", 
+        "0.10248447204968947", ",", "0.03416149068322982", ",", 
+        "0.04037267080745344", ",", "0.06211180124223603", ",", 
+        "0.09316770186335399", ",", "0.05900621118012417", ",", 
+        "0.03105590062111796", ",", "0.06521739130434778", ",", 
+        "0.03105590062111796", ",", "0.04658385093167705", ",", 
+        "0.05590062111801242", ",", "0.04347826086956519", ",", 
+        "0.03416149068322982", ",", "0.04347826086956519", ",", 
+        "0.0714285714285714", ",", "0.03416149068322982", ",", 
+        "0.07763975155279501", ",", "0.08074534161490687", ",", 
+        "0.03105590062111796", ",", "0.04658385093167705", ",", 
+        "0.04347826086956519", ",", "0.037267080745341574", ",", 
+        "0.05590062111801242", ",", "0.23291925465838514", ",", 
+        "0.04037267080745344", ",", "0.09316770186335399", ",", 
+        "0.04037267080745344", ",", "0.05590062111801242", ",", 
+        "0.05590062111801242", ",", "0.15527950310559002", ",", 
+        "0.08695652173913049", ",", "0.33229813664596275", ",", 
+        "0.037267080745341574", ",", "0.04658385093167705", ",", 
+        "0.04347826086956519", ",", "0.04658385093167705", ",", 
+        "0.03416149068322982", ",", "0.037267080745341574", ",", 
+        "0.0496894409937888", ",", "0.04347826086956519", ",", 
+        "0.03105590062111796", ",", "0.06211180124223603", ",", 
+        "0.08074534161490687", ",", "0.06211180124223603", ",", 
+        "0.04658385093167705", ",", "0.05590062111801242", ",", 
+        "0.09627329192546585", ",", "0.05900621118012417", ",", 
+        "0.06211180124223603", ",", "0.04037267080745344", ",", 
+        "0.05900621118012417", ",", "0.04347826086956519", ",", 
+        "0.04037267080745344", ",", "0.04347826086956519", ",", 
+        "0.07453416149068326", ",", "0.052795031055900665", ",", 
+        "0.04037267080745344", ",", "0.06521739130434778", ",", 
+        "0.09627329192546585", ",", "0.037267080745341574", ",", 
+        "0.052795031055900665", ",", "0.052795031055900665", ",", 
+        "0.28881987577639756", ",", "0.04347826086956519", ",", 
+        "0.08074534161490687", ",", "0.04347826086956519", ",", 
+        "0.07763975155279501", ",", "0.20186335403726707", ",", 
+        "0.09627329192546585", ",", "0.05590062111801242", ",", 
+        "0.052795031055900665", ",", "0.037267080745341574", ",", 
+        "0.04037267080745344", ",", "0.03416149068322982", ",", 
+        "0.13043478260869568", ",", "0.08074534161490687", ",", 
+        "0.052795031055900665", ",", "0.037267080745341574", ",", 
+        "0.052795031055900665", ",", "0.18322981366459623", ",", 
+        "0.03105590062111796", ",", "0.13354037267080743", ",", 
+        "0.07763975155279501", ",", "0.052795031055900665", ",", 
+        "0.1273291925465838", ",", "0.04037267080745344", ",", 
+        "0.03416149068322982", ",", "0.037267080745341574", ",", 
+        "0.05590062111801242", ",", "0.10869565217391308", ",", 
+        "0.06211180124223603", ",", "0.04037267080745344"}], "}"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data2", " ", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "100", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "0.05900621118012417", ",", "0.1708074534161491", ",", 
+        "0.06211180124223603", ",", "0.04347826086956519", ",", 
+        "0.08695652173913049", ",", "0.052795031055900665", ",", 
+        "0.0714285714285714", ",", "0.1149068322981367", ",", 
+        "0.06832298136645965", ",", "0.06832298136645965", ",", 
+        "0.1645962732919255", ",", "0.05900621118012417", ",", 
+        "0.08695652173913049", ",", "0.04658385093167705", ",", 
+        "0.06521739130434778", ",", "0.0496894409937888", ",", 
+        "0.0496894409937888", ",", "0.10248447204968947", ",", 
+        "0.0496894409937888", ",", "0.09006211180124224", ",", 
+        "0.052795031055900665", ",", "0.052795031055900665", ",", 
+        "0.06832298136645965", ",", "0.09006211180124224", ",", 
+        "0.0496894409937888", ",", "0.0496894409937888", ",", 
+        "0.0496894409937888", ",", "0.052795031055900665", ",", 
+        "0.17391304347826086", ",", "0.07763975155279501", ",", 
+        "0.18012422360248448", ",", "0.10869565217391308", ",", 
+        "0.11180124223602483", ",", "0.04037267080745344", ",", 
+        "0.08385093167701863", ",", "0.04347826086956519", ",", 
+        "0.0993788819875776", ",", "0.05590062111801242", ",", 
+        "0.04347826086956519", ",", "0.06211180124223603", ",", 
+        "0.05590062111801242", ",", "0.052795031055900665", ",", 
+        "0.05900621118012417", ",", "0.052795031055900665", ",", 
+        "0.06521739130434778", ",", "0.04658385093167705", ",", 
+        "0.04658385093167705", ",", "0.05590062111801242", ",", 
+        "0.04037267080745344", ",", "0.1428571428571429", ",", 
+        "0.052795031055900665", ",", "0.052795031055900665", ",", 
+        "0.06521739130434778", ",", "0.0993788819875776", ",", 
+        "0.052795031055900665", ",", "0.08695652173913049", ",", 
+        "0.052795031055900665", ",", "0.052795031055900665", ",", 
+        "0.0496894409937888", ",", "0.11180124223602483", ",", 
+        "0.13975155279503104", ",", "0.0714285714285714", ",", 
+        "0.052795031055900665", ",", "0.037267080745341574", ",", 
+        "0.05590062111801242", ",", "0.06521739130434778", ",", 
+        "0.052795031055900665", ",", "0.037267080745341574", ",", 
+        "0.08385093167701863", ",", "0.2857142857142857", ",", 
+        "0.052795031055900665", ",", "0.0496894409937888", ",", 
+        "0.05590062111801242", ",", "0.09316770186335399", ",", 
+        "0.14596273291925466", ",", "0.1925465838509317", ",", 
+        "0.06521739130434778", ",", "0.05900621118012417", ",", 
+        "0.0496894409937888", ",", "0.19875776397515532", ",", 
+        "0.05900621118012417", ",", "0.04347826086956519", ",", 
+        "0.09627329192546585", ",", "0.04037267080745344", ",", 
+        "0.10559006211180122", ",", "0.04658385093167705", ",", 
+        "0.052795031055900665", ",", "0.06211180124223603", ",", 
+        "0.0714285714285714", ",", "0.052795031055900665", ",", 
+        "0.1273291925465838", ",", "0.09316770186335399", ",", 
+        "0.06211180124223603", ",", "0.05590062111801242", ",", 
+        "0.06521739130434778", ",", "0.3012422360248447", ",", 
+        "0.052795031055900665", ",", "0.04037267080745344", ",", 
+        "0.052795031055900665", ",", "0.04658385093167705"}], "}"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data3", " ", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "100", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "0.04658385093167705", ",", "0.06211180124223603", ",", 
+        "0.06211180124223603", ",", "0.11180124223602483", ",", 
+        "0.09316770186335399", ",", "0.06211180124223603", ",", 
+        "0.05590062111801242", ",", "0.05900621118012417", ",", 
+        "0.0496894409937888", ",", "0.09316770186335399", ",", 
+        "0.0714285714285714", ",", "0.07763975155279501", ",", 
+        "0.06211180124223603", ",", "0.05900621118012417", ",", 
+        "0.0714285714285714", ",", "0.0714285714285714", ",", 
+        "0.08385093167701863", ",", "0.0993788819875776", ",", 
+        "0.05900621118012417", ",", "0.0496894409937888", ",", 
+        "0.03416149068322982", ",", "0.05900621118012417", ",", 
+        "0.13354037267080743", ",", "0.13975155279503104", ",", 
+        "0.0496894409937888", ",", "0.04347826086956519", ",", 
+        "0.0496894409937888", ",", "0.13975155279503104", ",", 
+        "0.04658385093167705", ",", "0.08385093167701863", ",", 
+        "0.052795031055900665", ",", "0.1211180124223602", ",", 
+        "0.10559006211180122", ",", "0.10248447204968947", ",", 
+        "0.05900621118012417", ",", "0.05590062111801242", ",", 
+        "0.08695652173913049", ",", "0.0496894409937888", ",", 
+        "0.05900621118012417", ",", "0.04037267080745344", ",", 
+        "0.06211180124223603", ",", "0.1708074534161491", ",", 
+        "0.04347826086956519", ",", "0.03416149068322982", ",", 
+        "0.06832298136645965", ",", "0.07453416149068326", ",", 
+        "0.03105590062111796", ",", "0.13354037267080743", ",", 
+        "0.07763975155279501", ",", "0.1211180124223602", ",", 
+        "0.08695652173913049", ",", "0.18322981366459623", ",", 
+        "0.037267080745341574", ",", "0.04658385093167705", ",", 
+        "0.08385093167701863", ",", "0.11180124223602483", ",", 
+        "0.07453416149068326", ",", "0.07453416149068326", ",", 
+        "0.1273291925465838", ",", "0.08074534161490687", ",", 
+        "0.04658385093167705", ",", "0.09627329192546585", ",", 
+        "0.06832298136645965", ",", "0.04658385093167705", ",", 
+        "0.06211180124223603", ",", "0.06832298136645965", ",", 
+        "0.0993788819875776", ",", "0.0496894409937888", ",", 
+        "0.05900621118012417", ",", "0.04347826086956519", ",", 
+        "0.0714285714285714", ",", "0.04347826086956519", ",", 
+        "0.09627329192546585", ",", "0.05590062111801242", ",", 
+        "0.10559006211180122", ",", "0.06832298136645965", ",", 
+        "0.06211180124223603", ",", "0.04658385093167705", ",", 
+        "0.06521739130434778", ",", "0.06832298136645965", ",", 
+        "0.10869565217391308", ",", "0.06521739130434778", ",", 
+        "0.04658385093167705", ",", "0.07763975155279501", ",", 
+        "0.05590062111801242", ",", "0.21118012422360244", ",", 
+        "0.05900621118012417", ",", "0.06521739130434778", ",", 
+        "0.1863354037267081", ",", "0.06211180124223603", ",", 
+        "0.05900621118012417", ",", "0.10559006211180122", ",", 
+        "0.1273291925465838", ",", "0.052795031055900665", ",", 
+        "0.3571428571428571", ",", "0.10248447204968947", ",", 
+        "0.0496894409937888", ",", "0.1149068322981367", ",", 
+        "0.05900621118012417", ",", "0.04347826086956519"}], "}"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data4", " ", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "100", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "0.03416149068322982", ",", "0.05900621118012417", ",", 
+        "0.24844720496894412", ",", "0.052795031055900665", ",", 
+        "0.052795031055900665", ",", "0.0496894409937888", ",", 
+        "0.10869565217391308", ",", "0.09316770186335399", ",", 
+        "0.1428571428571429", ",", "0.04037267080745344", ",", 
+        "0.06832298136645965", ",", "0.07453416149068326", ",", 
+        "0.1149068322981367", ",", "0.06832298136645965", ",", 
+        "0.05900621118012417", ",", "0.08385093167701863", ",", 
+        "0.05900621118012417", ",", "0.05590062111801242", ",", 
+        "0.05590062111801242", ",", "0.08385093167701863", ",", 
+        "0.10869565217391308", ",", "0.13043478260869568", ",", 
+        "0.06211180124223603", ",", "0.06211180124223603", ",", 
+        "0.1211180124223602", ",", "0.06832298136645965", ",", 
+        "0.07453416149068326", ",", "0.06211180124223603", ",", 
+        "0.17391304347826086", ",", "0.05900621118012417", ",", 
+        "0.0496894409937888", ",", "0.17701863354037262", ",", 
+        "0.0993788819875776", ",", "0.0496894409937888", ",", 
+        "0.1490683229813664", ",", "0.0714285714285714", ",", 
+        "0.08695652173913049", ",", "0.2080745341614907", ",", 
+        "0.052795031055900665", ",", "0.03105590062111796", ",", 
+        "0.06832298136645965", ",", "0.0714285714285714", ",", 
+        "0.052795031055900665", ",", "0.06211180124223603", ",", 
+        "0.04037267080745344", ",", "0.037267080745341574", ",", 
+        "0.07453416149068326", ",", "0.052795031055900665", ",", 
+        "0.1149068322981367", ",", "0.11801242236024845", ",", 
+        "0.10869565217391308", ",", "0.05590062111801242", ",", 
+        "0.03416149068322982", ",", "0.07453416149068326", ",", 
+        "0.06211180124223603", ",", "0.26086956521739135", ",", 
+        "0.05590062111801242", ",", "0.0496894409937888", ",", 
+        "0.03105590062111796", ",", "0.052795031055900665", ",", 
+        "0.1645962732919255", ",", "0.05900621118012417", ",", 
+        "0.037267080745341574", ",", "0.052795031055900665", ",", 
+        "0.05590062111801242", ",", "0.1149068322981367", ",", 
+        "0.06832298136645965", ",", "0.08074534161490687", ",", 
+        "0.0993788819875776", ",", "0.20496894409937894", ",", 
+        "0.07763975155279501", ",", "0.0496894409937888", ",", 
+        "0.05590062111801242", ",", "0.08385093167701863", ",", 
+        "0.05590062111801242", ",", "0.05900621118012417", ",", 
+        "0.0496894409937888", ",", "0.05590062111801242", ",", 
+        "0.037267080745341574", ",", "0.04037267080745344", ",", 
+        "0.07453416149068326", ",", "0.05900621118012417", ",", 
+        "0.05900621118012417", ",", "0.04037267080745344", ",", 
+        "0.04037267080745344", ",", "0.04347826086956519", ",", 
+        "0.07453416149068326", ",", "0.06521739130434778", ",", 
+        "0.05590062111801242", ",", "0.037267080745341574", ",", 
+        "0.10248447204968947", ",", "0.06521739130434778", ",", 
+        "0.04037267080745344", ",", "0.04347826086956519", ",", 
+        "0.0496894409937888", ",", "0.052795031055900665", ",", 
+        "0.03416149068322982", ",", "0.04037267080745344", ",", 
+        "0.09316770186335399", ",", "0.11180124223602483"}], "}"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data5", " ", "=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "100", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+       "0.06211180124223603", ",", "0.09006211180124224", ",", 
+        "0.05590062111801242", ",", "0.09006211180124224", ",", 
+        "0.04037267080745344", ",", "0.05590062111801242", ",", 
+        "0.2577639751552795", ",", "0.07453416149068326", ",", 
+        "0.052795031055900665", ",", "0.0714285714285714", ",", 
+        "0.06521739130434778", ",", "0.0714285714285714", ",", 
+        "0.05900621118012417", ",", "0.09006211180124224", ",", 
+        "0.06521739130434778", ",", "0.06211180124223603", ",", 
+        "0.05900621118012417", ",", "0.17701863354037262", ",", 
+        "0.07763975155279501", ",", "0.08385093167701863", ",", 
+        "0.052795031055900665", ",", "0.09006211180124224", ",", 
+        "0.08074534161490687", ",", "0.06211180124223603", ",", 
+        "0.0496894409937888", ",", "0.06832298136645965", ",", 
+        "0.1211180124223602", ",", "0.052795031055900665", ",", 
+        "0.05900621118012417", ",", "0.12422360248447206", ",", 
+        "0.08385093167701863", ",", "0.06211180124223603", ",", 
+        "0.08695652173913049", ",", "0.09316770186335399", ",", 
+        "0.11801242236024845", ",", "0.06211180124223603", ",", 
+        "0.05590062111801242", ",", "0.08074534161490687", ",", 
+        "0.06832298136645965", ",", "0.13354037267080743", ",", 
+        "0.09316770186335399", ",", "0.05900621118012417", ",", 
+        "0.06211180124223603", ",", "0.11180124223602483", ",", 
+        "0.1645962732919255", ",", "0.05590062111801242", ",", 
+        "0.06832298136645965", ",", "0.06521739130434778", ",", 
+        "0.06832298136645965", ",", "0.0714285714285714", ",", 
+        "0.07763975155279501", ",", "0.15527950310559002", ",", 
+        "0.12422360248447206", ",", "0.05900621118012417", ",", 
+        "0.05900621118012417", ",", "0.052795031055900665", ",", 
+        "0.17391304347826086", ",", "0.09627329192546585", ",", 
+        "0.10869565217391308", ",", "0.08074534161490687", ",", 
+        "0.28260869565217395", ",", "0.05900621118012417", ",", 
+        "0.0496894409937888", ",", "0.06211180124223603", ",", 
+        "0.08385093167701863", ",", "0.04347826086956519", ",", 
+        "0.06521739130434778", ",", "0.052795031055900665", ",", 
+        "0.05590062111801242", ",", "0.16149068322981364", ",", 
+        "0.10869565217391308", ",", "0.08695652173913049", ",", 
+        "0.07453416149068326", ",", "0.05590062111801242", ",", 
+        "0.07453416149068326", ",", "0.23913043478260865", ",", 
+        "0.06521739130434778", ",", "0.05590062111801242", ",", 
+        "0.06521739130434778", ",", "0.06211180124223603", ",", 
+        "0.07453416149068326", ",", "0.08695652173913049", ",", 
+        "0.07763975155279501", ",", "0.06521739130434778", ",", 
+        "0.06211180124223603", ",", "0.05590062111801242", ",", 
+        "0.07763975155279501", ",", "0.06211180124223603", ",", 
+        "0.08385093167701863", ",", "0.0714285714285714", ",", 
+        "0.08074534161490687", ",", "0.05900621118012417", ",", 
+        "0.06832298136645965", ",", "0.08385093167701863", ",", 
+        "0.07453416149068326", ",", "0.0496894409937888", ",", 
+        "0.052795031055900665", ",", "0.05590062111801242", ",", 
+        "0.21739130434782605", ",", "0.06832298136645965"}], "}"}]}], "}"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+     "data1", "+", "data2", "+", "data3", "+", "data4", "+", "data5"}], ")"}],
+     "/", "5"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"data", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{"1", ";;", "50"}], ",", "All"}], "]"}], "]"}], ",", " ", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Style", "[", 
+       RowBox[{"\"\<Epochs Elapsed\>\"", ",", " ", "Black"}], "]"}], ",", 
+      RowBox[{"Style", "[", 
+       RowBox[{"\"\<Misclassification Rate\>\"", ",", " ", "Black"}], "]"}]}],
+      "}"}]}], ",", " ", 
+   RowBox[{"PlotLabel", "\[Rule]", 
+    RowBox[{"Style", "[", 
+     RowBox[{"\"\<Voting Data Perceptron\>\"", ",", " ", "Black"}], "]"}]}], 
+   ",", " ", 
+   RowBox[{"PlotStyle", "\[Rule]", "Blue"}], ",", 
+   RowBox[{"PlotMarkers", "\[Rule]", " ", 
+    RowBox[{"{", 
+     RowBox[{"\[FilledCircle]", ",", "10"}], "}"}]}], ",", " ", 
+   RowBox[{"PlotLegends", "\[Rule]", 
+    RowBox[{"{", "\"\<Average\>\"", "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7150187674231358`*^9, 3.71501891764264*^9}, {
+  3.71501896095268*^9, 3.715018981100944*^9}, {3.71501903627601*^9, 
+  3.715019102441572*^9}, {3.715019234344315*^9, 3.715019481364484*^9}, {
+  3.715019948123549*^9, 
+  3.715019949285421*^9}},ExpressionUUID->"303a1129-4153-4e2a-974b-\
+eae457016e37"],
+
+Cell[BoxData[
+ TemplateBox[{GraphicsBox[{{}, {{{
+        Directive[
+         PointSize[0.011000000000000001`], 
+         AbsoluteThickness[1.6], 
+         RGBColor[0, 0, 1], 
+         AbsolutePointSize[6]], 
+        GeometricTransformationBox[
+         InsetBox[
+          BoxData[
+           FormBox[
+            StyleBox[
+            "\[FilledCircle]", FontSize -> 10, StripOnInput -> False], 
+            TraditionalForm]], {0., 0.}], CompressedData["
+1:eJxTTMoPSmVmYGAwAmJGIGZigIEP9u5uy7tiIlfbQwUc3temlKw6sRXK53BQ
+SpV6udxgN5Qv4CDbuGgt2/mNUL6Iw/5p6/6vSdgA5Us4TOc4ePboKph5Mg6/
+mnvdP7PD9Cs4sJiLr867sgXKV3KoubW3v8cPZp+Kg4PKt09bqtdD+WoOOhJL
+fJT/wtRrOHydL8oTtAxmv5ZDFYp+HYfH5dYLEzth7tFz2BJRunjZk7VQvoFD
+hPSj1npmmH5Dh1OCGreyPqyB8o0c1gf5XIhdugPKN3YIubtCs7J9HZRv4uCc
+pO+/+ztMv6nDFRT9Zg612dOiE2w3Q/nmaO6zcJD6cPKh0QOYvKWDNEp4WjlM
+eMZvJncW5n9rB67IE05im2D+sXHIdd7zIV9hE5Rv61C0g+fHk4KdUL6dwynd
+DfNO9sHMt3c4Mef6pa/zYfY7OLiA3X8Qwm9wcLh1ZKPtsz3boPKODqDQFkmD
+6m9wdFBvP93gz7cdKu/kkAXy3mRoeDY4OXzhs3Wo2w6zz9mBZ036pscqe6Dy
+zmj+cXGo3Wd6WnfDPqi8i8PUrYpxP8xh/nN12F7yN521GRrfDa4Oqw4Ws3Rt
+WwWVd3NwQU4fDW4O4V2cu1aLwOx3dzhQpWbtd2glVN4dLT16oMZfg4dDFEp6
+8HSI/R95UCF1lz0Aq6/k3w==
+         "]]}, {}}}, {}, {}, {{}, {}}, {{}, {}}}, {
+    DisplayFunction -> Identity, PlotRangePadding -> {{
+        Scaled[0.02], 
+        Scaled[0.02]}, {
+        Scaled[0.02], 
+        Scaled[0.05]}}, AxesOrigin -> {0, 0}, 
+     PlotRange -> {{0, 50.}, {0, 0.14037267080745341`}}, PlotRangeClipping -> 
+     True, ImagePadding -> All, DisplayFunction -> Identity, AspectRatio -> 
+     NCache[GoldenRatio^(-1), 0.6180339887498948], Axes -> {True, True}, 
+     AxesLabel -> {
+       FormBox[
+        StyleBox["\"Epochs Elapsed\"", 
+         GrayLevel[0], StripOnInput -> False], TraditionalForm], 
+       FormBox[
+        StyleBox["\"Misclassification Rate\"", 
+         GrayLevel[0], StripOnInput -> False], TraditionalForm]}, 
+     AxesOrigin -> {0, 0}, DisplayFunction :> Identity, 
+     Frame -> {{False, False}, {False, False}}, 
+     FrameLabel -> {{None, None}, {None, None}}, 
+     FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
+     GridLines -> {None, None}, GridLinesStyle -> Directive[
+       GrayLevel[0.5, 0.4]], 
+     Method -> {"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+           (Identity[#]& )[
+            Part[#, 1]], 
+           (Identity[#]& )[
+            Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+           (Identity[#]& )[
+            Part[#, 1]], 
+           (Identity[#]& )[
+            Part[#, 2]]}& )}}, PlotLabel -> FormBox[
+       StyleBox["\"Voting Data Perceptron\"", 
+        GrayLevel[0], StripOnInput -> False], TraditionalForm], 
+     PlotRange -> {{0, 50.}, {0, 0.14037267080745341`}}, PlotRangeClipping -> 
+     True, PlotRangePadding -> {{
+        Scaled[0.02], 
+        Scaled[0.02]}, {
+        Scaled[0.02], 
+        Scaled[0.05]}}, Ticks -> {Automatic, Automatic}}],FormBox[
+    FormBox[
+     TemplateBox[{"\"Average\""}, "PointLegend", DisplayFunction -> (FormBox[
+        StyleBox[
+         StyleBox[
+          PaneBox[
+           TagBox[
+            GridBox[{{
+               TagBox[
+                GridBox[{{
+                   GraphicsBox[{{}, {
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.396], 
+                    AbsoluteThickness[1.6], 
+                    RGBColor[0, 0, 1]], {
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\[FilledCircle]", FontSize -> 10, StripOnInput -> False],
+                     TraditionalForm], 
+                    NCache[
+                    Scaled[{
+                    Rational[1, 2], 
+                    Rational[1, 2]}], 
+                    Scaled[{0.5, 0.5}]]]}}}, AspectRatio -> Full, 
+                    ImageSize -> {10, 10}, PlotRangePadding -> None, 
+                    ImagePadding -> Automatic, 
+                    BaselinePosition -> (Scaled[0.1] -> Baseline)], #}}, 
+                 GridBoxAlignment -> {
+                  "Columns" -> {Center, Left}, "Rows" -> {{Baseline}}}, 
+                 AutoDelete -> False, 
+                 GridBoxDividers -> {
+                  "Columns" -> {{False}}, "Rows" -> {{False}}}, 
+                 GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}},
+                  GridBoxSpacings -> {
+                  "Columns" -> {{0.5}}, "Rows" -> {{0.8}}}], "Grid"]}}, 
+             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+             AutoDelete -> False, 
+             GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{1}}, "Rows" -> {{0}}}], 
+            "Grid"], Alignment -> Left, AppearanceElements -> None, 
+           ImageMargins -> {{5, 5}, {5, 5}}, ImageSizeAction -> 
+           "ResizeToFit"], LineIndent -> 0, StripOnInput -> False], {
+         FontFamily -> "Arial"}, Background -> Automatic, StripOnInput -> 
+         False], TraditionalForm]& ), 
+      InterpretationFunction :> (RowBox[{"PointLegend", "[", 
+         RowBox[{
+           RowBox[{"{", 
+             RowBox[{"Directive", "[", 
+               RowBox[{
+                 RowBox[{"PointSize", "[", "0.011000000000000001`", "]"}], 
+                 ",", 
+                 RowBox[{"AbsoluteThickness", "[", "1.6`", "]"}], ",", 
+                 InterpretationBox[
+                  ButtonBox[
+                   TooltipBox[
+                    GraphicsBox[{{
+                    GrayLevel[0], 
+                    RectangleBox[{0, 0}]}, {
+                    GrayLevel[0], 
+                    RectangleBox[{1, -1}]}, {
+                    RGBColor[0, 0, 1], 
+                    RectangleBox[{0, -1}, {2, 1}]}}, AspectRatio -> 1, Frame -> 
+                    True, FrameStyle -> RGBColor[0., 0., 0.6666666666666666], 
+                    FrameTicks -> None, PlotRangePadding -> None, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 1.35 CurrentValue["FontCapHeight"]/
+                    AbsoluteCurrentValue[Magnification]}]], 
+                    "RGBColor[0, 0, 1]"], Appearance -> None, BaseStyle -> {},
+                    BaselinePosition -> Baseline, DefaultBaseStyle -> {}, 
+                   ButtonFunction :> With[{Typeset`box$ = EvaluationBox[]}, 
+                    If[
+                    Not[
+                    AbsoluteCurrentValue["Deployed"]], 
+                    SelectionMove[Typeset`box$, All, Expression]; 
+                    FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+                    FrontEnd`Private`$ColorSelectorInitialColor = 
+                    RGBColor[0, 0, 1]; 
+                    FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+                    MathLink`CallFrontEnd[
+                    FrontEnd`AttachCell[Typeset`box$, 
+                    FrontEndResource["RGBColorValueSelector"], {
+                    0, {Left, Bottom}}, {Left, Top}, 
+                    "ClosingActions" -> {
+                    "SelectionDeparture", "ParentChanged", 
+                    "EvaluatorQuit"}]]]], BaseStyle -> Inherited, Evaluator -> 
+                   Automatic, Method -> "Preemptive"], 
+                  RGBColor[0, 0, 1], Editable -> False, Selectable -> 
+                  False]}], "]"}], "}"}], ",", 
+           RowBox[{"{", #, "}"}], ",", 
+           RowBox[{"LegendMarkers", "\[Rule]", 
+             RowBox[{"{", 
+               RowBox[{"{", 
+                 RowBox[{"\[FilledCircle]", ",", "10"}], "}"}], "}"}]}], ",", 
+           
+           RowBox[{"Joined", "\[Rule]", 
+             RowBox[{"{", "False", "}"}]}], ",", 
+           RowBox[{"LabelStyle", "\[Rule]", 
+             RowBox[{"{", "}"}]}], ",", 
+           RowBox[{"LegendLayout", "\[Rule]", "\"Column\""}]}], "]"}]& ), 
+      Editable -> True], TraditionalForm], TraditionalForm]},
+  "Legended",
+  DisplayFunction->(GridBox[{{
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"], 
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, GridBoxItemSize -> Automatic, 
+    BaselinePosition -> {1, 1}]& ),
+  Editable->True,
+  InterpretationFunction->(RowBox[{"Legended", "[", 
+     RowBox[{#, ",", 
+       RowBox[{"Placed", "[", 
+         RowBox[{#2, ",", "After"}], "]"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{{3.7150187905386*^9, 3.71501883337926*^9}, {
+   3.715018899090239*^9, 3.715018918061822*^9}, 3.7150189654909277`*^9, {
+   3.715019040012582*^9, 3.715019044003994*^9}, {3.715019092317677*^9, 
+   3.7150191029771023`*^9}, 3.7150192809190607`*^9, 3.715019395114512*^9, {
+   3.715019426932646*^9, 3.715019482111248*^9}, 
+   3.715019950316386*^9},ExpressionUUID->"242256c7-5c20-47a1-be79-\
+b83bc8de67fc"]
+}, {2}]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1743,53 +2146,6 @@ Cell["Part 6", "Subsection",
   3.714958411848822*^9, 3.714958413911687*^9}, {3.714958603250937*^9, 
   3.714958603388321*^9}},ExpressionUUID->"dbd50abf-dc2c-41e7-a283-\
 d6dc7ffa8ac4"],
-
-Cell[CellGroupData[{
-
-Cell["Question", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958532500328*^9}},ExpressionUUID->"db05f681-955c-491c-8d69-\
-0b2292467525"],
-
-Cell["\<\
-6.  (15%) Do your own experiment with either the perceptron or delta rule.  \
-Include in your discussion what you learned from the experiment.  Have fun \
-and be creative!  For this lab and all the future labs make sure you do \
-something more than just try out the model on different data sets.  One \
-option you can do to fulfill this part is the following:
-
-Use the perceptron rule to learn the iris task or some other task with more \
-than two possible output values. Note that the iris data set has 3 output \
-classes, and a perceptron node only has two possible outputs.  Two common \
-ways to deal with this are:
-
-a)  Create 1 perceptron for each output class.  Each perceptron has its own \
-training set which considers its class positive and all other classes to be \
-negative examples.  Run all three perceptrons on novel data and set the class \
-to the label of the perceptron which outputs high.  If there is a tie, choose \
-the perceptron with the highest net value.
-
-b)  Create 1 perceptron for each pair of output classes, where the training \
-set only contains examples from the 2 classes.  Run all perceptrons on novel \
-data and set the class to the label with the most wins (votes) from the \
-perceptrons.  In case of a tie, use the net values to decide.
-
-You could implement one of these.  For either of these approaches you can \
-train up the models independently or simultaneously.  For testing you just \
-execute the novel instance on each model and combine the overall results to \
-see which output class wins.\
-\>", "Text",
- CellChangeTimes->{
-  3.714958737113593*^9},ExpressionUUID->"10301b94-c86a-4f25-956a-\
-303fec22305f"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["Response", "Subsubsection",
- CellChangeTimes->{{3.714958531064692*^9, 
-  3.714958548176784*^9}},ExpressionUUID->"6fe4f216-5493-4983-bfd8-\
-7f14f8255504"],
 
 Cell["\<\
 For this part I created two different perceptrons to solve the iris data set. \
@@ -1807,15 +2163,23 @@ so was not included for consistency.
 As shown by the data, the matched pairs perceptron achieved a higher and more \
 stable accuracy compared to the individual perceptron model. In fact, it \
 would appear as if in almost every case the matched pairs model performed \
-better than the individual comparing model. Average accuracy is included for \
-reference.\
+better than the individual selection model. Average accuracy is included for \
+reference. I propose that the results are because the matched pairs \
+experiment is a more defined experiment - The machine only needs to separate \
+between two sets of data rather than 3 at a time. For example, it is \
+conceivable to have three sets of data with one set in the middle. A \
+individually-selecting perceptron would not be able to separate this middle \
+portion from the two outside portions whereas the matched-pairs perceptron \
+could. This is why the matched-pairs perceptron is likely better.\
 \>", "Text",
  CellChangeTimes->{{3.7150002918732967`*^9, 3.715000341842594*^9}, {
    3.715000389272931*^9, 3.7150004727301598`*^9}, {3.715003042668709*^9, 
    3.715003083659781*^9}, {3.715003217900579*^9, 3.7150033025222607`*^9}, 
    3.715003668168726*^9, {3.7150042415413237`*^9, 3.71500430584217*^9}, {
    3.715013998828208*^9, 3.715014037830557*^9}, {3.7150140736718693`*^9, 
-   3.715014113308271*^9}},ExpressionUUID->"f709a8ba-9070-4541-ab6d-\
+   3.715014113308271*^9}, {3.7150208509110603`*^9, 3.7150209564025383`*^9}, {
+   3.715021050196621*^9, 
+   3.7150211258394012`*^9}},ExpressionUUID->"f709a8ba-9070-4541-ab6d-\
 ab1406d94333"],
 
 Cell[CellGroupData[{
@@ -2583,7 +2947,6 @@ e47e536362a9"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
-}, Open  ]]
 },
 WindowSize->{956, 1041},
 WindowMargins->{{2, Automatic}, {Automatic, 18}},
@@ -2619,150 +2982,94 @@ Cell[1373, 49, 3125, 74, 103, "Input", "ExpressionUUID" -> \
 Cell[CellGroupData[{
 Cell[4535, 128, 205, 4, 36, "Subsection", "ExpressionUUID" -> \
 "21490b9f-e51a-4842-b44f-bc0994bb71f3"],
-Cell[CellGroupData[{
-Cell[4765, 136, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"5884fc4f-3c25-49b0-b27b-4071ec2ecafe"],
-Cell[4927, 141, 898, 14, 77, "Text", "ExpressionUUID" -> \
-"e408f643-abec-47b7-bbc6-514e3faf937d"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[5862, 160, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"09e10101-41e9-4100-818c-993c53a7fdac"],
-Cell[6024, 165, 358, 7, 33, "Text", "ExpressionUUID" -> \
+Cell[4743, 134, 358, 7, 33, "Text", "ExpressionUUID" -> \
 "3ff43389-b5e8-4fac-a26e-054a6326d0bf"]
-}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[6431, 178, 250, 4, 44, "Subsection", "ExpressionUUID" -> \
+Cell[5138, 146, 250, 4, 44, "Subsection", "ExpressionUUID" -> \
 "3ddd2150-db23-4459-9716-b497c3ceb0a1"],
-Cell[CellGroupData[{
-Cell[6706, 186, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"ba947ffc-b905-4570-888d-c7bb185fc8fe"],
-Cell[6868, 191, 379, 8, 33, "Text", "ExpressionUUID" -> \
-"cb2d0dbb-7255-48e5-a910-bc6362d93878"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[7284, 204, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"98936158-3468-4e4c-8ca2-5dd6704f8ff5"],
-Cell[7446, 209, 3072, 76, 412, "Text", "ExpressionUUID" -> \
+Cell[5391, 152, 3072, 76, 412, "Text", "ExpressionUUID" -> \
 "9e4c9b0a-b3fe-465f-8ee2-6ec3151d82df"]
-}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10567, 291, 253, 4, 44, "Subsection", "ExpressionUUID" -> \
+Cell[8500, 233, 253, 4, 44, "Subsection", "ExpressionUUID" -> \
 "fdbde836-5af2-423b-89a3-08361e367d76"],
-Cell[CellGroupData[{
-Cell[10845, 299, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"454d9762-5456-4bb6-b22a-8ca7367a8b19"],
-Cell[11007, 304, 972, 17, 121, "Text", "ExpressionUUID" -> \
-"abd1eb25-64a8-4b18-b517-d63616c3bb5a"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[12016, 326, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"b3148bb9-6680-4d17-86b8-60574da4d4d1"],
-Cell[12178, 331, 1226, 21, 99, "Text", "ExpressionUUID" -> \
+Cell[8756, 239, 1772, 28, 165, "Text", "ExpressionUUID" -> \
 "ea271a57-f77f-4bab-889f-a707165ccc56"],
 Cell[CellGroupData[{
-Cell[13429, 356, 2646, 73, 80, "Input", "ExpressionUUID" -> \
+Cell[10553, 271, 2696, 74, 80, "Input", "ExpressionUUID" -> \
 "6509cbcc-8f53-46a1-b302-39437e4aaf9c"],
-Cell[16078, 431, 12271, 264, 199, "Output", "ExpressionUUID" -> \
+Cell[13252, 347, 12317, 266, 199, "Output", "ExpressionUUID" -> \
 "d79c10a9-5839-43ac-8d66-98ce18cd0449"]
 }, {2}]]
-}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[28407, 702, 253, 4, 44, "Subsection", "ExpressionUUID" -> \
+Cell[25615, 619, 253, 4, 44, "Subsection", "ExpressionUUID" -> \
 "609ef771-07dc-40f6-b426-8cfc5143ea17"],
-Cell[CellGroupData[{
-Cell[28685, 710, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"0eec54bc-a087-4952-b63e-248d05e2f153"],
-Cell[28847, 715, 250, 6, 33, "Text", "ExpressionUUID" -> \
-"68675f81-d68d-4887-9e17-aa1689490d52"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[29134, 726, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"5d9c8b89-18b5-42c0-965d-4ffca65073ff"],
-Cell[29296, 731, 225, 5, 33, "Text", "ExpressionUUID" -> \
+Cell[25871, 625, 418, 8, 33, "Text", "ExpressionUUID" -> \
 "6f97dc2d-a312-4b34-bde8-cf079c2b8a9f"],
 Cell[CellGroupData[{
-Cell[29546, 740, 3002, 83, 191, "Input", "ExpressionUUID" -> \
+Cell[26314, 637, 3002, 83, 191, "Input", "ExpressionUUID" -> \
 "9d8d50ac-5878-4ae8-b0d8-9ebef540840f"],
-Cell[32551, 825, 9649, 206, 241, "Output", "ExpressionUUID" -> \
+Cell[29319, 722, 9672, 207, 241, "Output", "ExpressionUUID" -> \
 "93c5cdec-d7c8-4b2a-98fd-d2ce6800f4da"],
-Cell[42203, 1033, 9393, 201, 241, "Output", "ExpressionUUID" -> \
+Cell[38994, 931, 9393, 201, 241, "Output", "ExpressionUUID" -> \
 "c0c1d58d-7201-4ccd-bdd5-b125ac271717"]
 }, {2, 3}]]
-}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[51657, 1241, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
+Cell[48436, 1138, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
 "c1b8ef4d-15ce-452c-a9c8-cb156040fe33"],
-Cell[CellGroupData[{
-Cell[51933, 1249, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"28e89f4f-367f-4395-a443-8709ff7c1060"],
-Cell[52095, 1254, 1304, 20, 121, "Text", "ExpressionUUID" -> \
-"d5679ac8-041c-49ea-beb7-0617324c9600"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[53436, 1279, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"830b0ebb-00c1-4231-bc59-d7ab958b9af9"],
-Cell[53598, 1284, 243, 6, 33, "Text", "ExpressionUUID" -> \
+Cell[48690, 1144, 341, 7, 33, "Text", "ExpressionUUID" -> \
 "65614d1c-218a-44c5-af71-3469c435ec16"],
 Cell[CellGroupData[{
-Cell[53866, 1294, 3955, 101, 172, "Input", "ExpressionUUID" -> \
+Cell[49056, 1155, 4054, 103, 172, "Input", "ExpressionUUID" -> \
 "7447e06c-e6a1-4997-bdbc-1173b5dc2f85"],
-Cell[57824, 1397, 12407, 264, 217, "Output", "ExpressionUUID" -> \
-"e5edf785-a8ba-409f-ad4e-60f0b2542f6f"],
+Cell[53113, 1260, 12460, 265, 217, "Output", "ExpressionUUID" -> \
+"d37735cc-2a43-46a6-a93f-7e474207403f"],
 Cell[CellGroupData[{
-Cell[70256, 1665, 459, 9, 24, "Print", "ExpressionUUID" -> \
-"7558a072-1e2c-47f3-9492-92c3db3affd9"],
-Cell[70718, 1676, 467, 9, 24, "Print", "ExpressionUUID" -> \
-"5e526ff6-229a-45b8-a365-e38adec407ba"],
-Cell[71188, 1687, 463, 9, 24, "Print", "ExpressionUUID" -> \
-"79f6d3af-bb1b-40b2-b0f4-77479e884676"]
+Cell[65598, 1529, 533, 10, 24, "Print", "ExpressionUUID" -> \
+"6cbfe3d9-1434-40b8-8fb4-08445f98f571"],
+Cell[66134, 1541, 545, 10, 24, "Print", "ExpressionUUID" -> \
+"309d1f5f-68e3-423a-a08e-5cb5ffa157b5"],
+Cell[66682, 1553, 543, 10, 24, "Print", "ExpressionUUID" -> \
+"48cf61b1-daaa-452e-ad96-3dfbdd9f3696"]
 }, Open  ]]
 }, {2, 3, 4, 5}]],
-Cell[71684, 1700, 600, 11, 55, "Text", "ExpressionUUID" -> \
-"ba087523-d77e-4633-8fa6-ecdc328c6f5a"],
-Cell[72287, 1713, 1224, 21, 165, "Text", "ExpressionUUID" -> \
-"f6523755-1373-4f1f-bce0-2404de778c70"]
-}, Open  ]]
+Cell[67258, 1567, 2415, 39, 319, "Text", "ExpressionUUID" -> \
+"f6523755-1373-4f1f-bce0-2404de778c70"],
+Cell[CellGroupData[{
+Cell[69698, 1610, 18895, 332, 1570, "Input", "ExpressionUUID" -> \
+"303a1129-4153-4e2a-974b-eae457016e37"],
+Cell[88596, 1944, 9075, 193, 200, "Output", "ExpressionUUID" -> \
+"242256c7-5c20-47a1-be79-b83bc8de67fc"]
+}, {2}]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[73560, 1740, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
+Cell[97717, 2143, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
 "dbd50abf-dc2c-41e7-a283-d6dc7ffa8ac4"],
-Cell[CellGroupData[{
-Cell[73836, 1748, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"db05f681-955c-491c-8d69-0b2292467525"],
-Cell[73998, 1753, 1659, 30, 297, "Text", "ExpressionUUID" -> \
-"10301b94-c86a-4f25-956a-303fec22305f"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[75694, 1788, 159, 3, 35, "Subsubsection", "ExpressionUUID" -> \
-"6fe4f216-5493-4983-bfd8-7f14f8255504"],
-Cell[75856, 1793, 1465, 25, 187, "Text", "ExpressionUUID" -> \
+Cell[97971, 2149, 2072, 33, 231, "Text", "ExpressionUUID" -> \
 "f709a8ba-9070-4541-ab6d-ab1406d94333"],
 Cell[CellGroupData[{
-Cell[77346, 1822, 6095, 165, 310, "Input", "ExpressionUUID" -> \
+Cell[100068, 2186, 6095, 165, 310, "Input", "ExpressionUUID" -> \
 "06befc4c-bd06-4460-bd19-1579e525fa84"],
-Cell[83444, 1989, 12419, 267, 257, "Output", "ExpressionUUID" -> \
+Cell[106166, 2353, 12419, 267, 257, "Output", "ExpressionUUID" -> \
 "5e71ca85-5971-47c9-a7c2-9363a21a3cb7"],
 Cell[CellGroupData[{
-Cell[95888, 2260, 514, 10, 24, "Print", "ExpressionUUID" -> \
+Cell[118610, 2624, 514, 10, 24, "Print", "ExpressionUUID" -> \
 "901ac081-7a27-4a93-bfa3-face047989c4"],
-Cell[96405, 2272, 514, 10, 24, "Print", "ExpressionUUID" -> \
+Cell[119127, 2636, 514, 10, 24, "Print", "ExpressionUUID" -> \
 "ad31f404-26dd-4ab4-92a1-3121c1be8e05"]
 }, Open  ]],
-Cell[96934, 2285, 12466, 267, 257, "Output", "ExpressionUUID" -> \
+Cell[119656, 2649, 12466, 267, 257, "Output", "ExpressionUUID" -> \
 "2de242b6-a26c-44b2-89b0-25a5dd1f5a7f"],
 Cell[CellGroupData[{
-Cell[109425, 2556, 516, 10, 24, "Print", "ExpressionUUID" -> \
+Cell[132147, 2920, 516, 10, 24, "Print", "ExpressionUUID" -> \
 "bc8eb82a-0069-4bff-8733-73fcae76ad87"],
-Cell[109944, 2568, 514, 10, 24, "Print", "ExpressionUUID" -> \
+Cell[132666, 2932, 514, 10, 24, "Print", "ExpressionUUID" -> \
 "02eb5f51-271d-4073-a3f9-e47e536362a9"]
 }, Open  ]]
 }, {2, 3, 4, 5, 6, 7}]]
-}, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
