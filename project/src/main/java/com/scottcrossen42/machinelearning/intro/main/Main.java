@@ -23,9 +23,11 @@ public class Main {
         String[] managerArgs4 = {"-L", "perceptron", "-A", dataDir + "custom2.arff", "-E", "training"};
         //manager.main(managerArgs4);
         String[] managerArgs5 = {"-L", "perceptron", "-A", dataDir + "voting.arff", "-E", "random", ".7"};
-        manager.main(managerArgs5);
-        String[] managerArgs6 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "random", ".7"};
+        //manager.main(managerArgs5);
+        String[] managerArgs6 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "random", ".75"};
         //manager.main(managerArgs6);
+        String[] managerArgs7 = {"-L", "Backpropagation", "-A", dataDir + "iris.arff", "-E", "random", ".7"};
+        manager.main(managerArgs7);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;

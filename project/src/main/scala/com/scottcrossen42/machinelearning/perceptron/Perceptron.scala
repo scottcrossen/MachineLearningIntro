@@ -5,22 +5,26 @@ import edu.byu.cs478.toolkit.Matrix
 import scala.math.{sqrt, floor, abs}
 import java.util.Random
 import scala.collection.JavaConverters._
+import com.scottcrossen42.machinelearning.utility.WeightOperations
+
+object Perceptron {
+  val verbose = false
+
+  val initialWeight = 0
+
+  val trainingConstant = 0.1
+
+  val threshold = 1
+
+  val matchedPairsMethod = true
+
+  val maxEpochs = 100
+
+  val stopEpochEarly = false
+}
 
 class Perceptron(rand: Random) extends SupervisedLearner {
-
-  private[this] val verbose = false
-
-  private[this] val initialWeight = 0
-
-  private[this] val trainingConstant = 0.1
-
-  private[this] val threshold = 1
-
-  private[this] val matchedPairsMethod = true
-
-  private[this] val maxEpochs = 100
-
-  private[this] val stopEpochEarly = false
+  import Perceptron._
 
   // column of label, pairing of label, weight vector
   private[this] var allWeightVector: Array[List[List[Double]]] = Array()
@@ -98,8 +102,8 @@ class Perceptron(rand: Random) extends SupervisedLearner {
       val winners = (0 to amntPairings - 1).map{ iter =>
         val weightVector: List[Double] = allWeightVector(colNum)(iter)
         val (pair1: Int, pair2: Int) = unHashMatchedPairs(distinctVals, iter)
-        //println(s"pair1: $pair1, pair2: $pair2 features: ${addTerms(features.toList)} weightVector: $weightVector dotProd: ${elementMultiply(addTerms(features.toList), weightVector).sum}")
-        if (elementMultiply(addTerms(features.toList), weightVector).sum > 0) pair1 else pair2
+        //println(s"pair1: $pair1, pair2: $pair2 features: ${addTerms(features.toList)} weightVector: $weightVector dotProd: ${WeightOperations.elementMultiply(addTerms(features.toList), weightVector).sum}")
+        if (WeightOperations.elementMultiply(addTerms(features.toList), weightVector).sum > 0) pair1 else pair2
       }.toList
       distinctVals.maxBy{ x: Int =>
         winners.count { winner: Int =>
@@ -118,9 +122,9 @@ class Perceptron(rand: Random) extends SupervisedLearner {
       val (bestVal: Int, bestScore: Double) = (0 to amntValues - 1).foldLeft((0,0.0)){ (soFar: Tuple2[Int,Double], iter: Int) =>
         val weightVector: List[Double] = allWeightVector(colNum)(iter)
         val pair1: Int = distinctVals(iter)
-        //println(s"pair1: $pair1, features: ${addTerms(features.toList)} weightVector: $weightVector dotProd: ${elementMultiply(addTerms(features.toList), weightVector).sum}")
-        if (elementMultiply(addTerms(features.toList), weightVector).sum > soFar._2) {
-          (pair1, elementMultiply(addTerms(features.toList), weightVector).sum)
+        //println(s"pair1: $pair1, features: ${addTerms(features.toList)} weightVector: $weightVector dotProd: ${WeightOperations.elementMultiply(addTerms(features.toList), weightVector).sum}")
+        if (WeightOperations.elementMultiply(addTerms(features.toList), weightVector).sum > soFar._2) {
+          (pair1, WeightOperations.elementMultiply(addTerms(features.toList), weightVector).sum)
         } else {
           soFar
         }
@@ -134,8 +138,8 @@ class Perceptron(rand: Random) extends SupervisedLearner {
     val startingWeight: Option[List[Double]] = None
     val (outputWeightVector: Option[List[Double]], _) = (0 to maxEpochs - 1).foldLeft((startingWeight, 0)) { (soFar: Tuple2[Option[List[Double]], Int], iter: Int) =>
       if (iter > 0) features.shuffle(rand, labels)
-      val newWeightVector = trainOnAll(colNum, features, labels, correctPair)
-      val noChange: Boolean = soFar._1.map(lastWeight => elementSubtract(newWeightVector, lastWeight).sum < newWeightVector.size * trainingConstant * 0.2).getOrElse(false)
+      val newWeightVector = presentEpoch(colNum, features, labels, correctPair)
+      val noChange: Boolean = soFar._1.map(lastWeight => WeightOperations.elementSubtract(newWeightVector, lastWeight).sum < newWeightVector.size * trainingConstant * 0.2).getOrElse(false)
       if (noChange) {
         if (soFar._2 > 4) {
           if (verbose) println(s"Ending training early. Weight vector changed less than ${newWeightVector.size * trainingConstant * 0.2} for 5 successive epochs on epoch #$iter")
@@ -151,7 +155,7 @@ class Perceptron(rand: Random) extends SupervisedLearner {
     return outputWeightVector.getOrElse(List[Double]())
   }
 
-  private[this] def trainOnAll(labelColumn: Int, features: Matrix, labels: Matrix, correctPair: Int): List[Double] = {
+  private[this] def presentEpoch(labelColumn: Int, features: Matrix, labels: Matrix, correctPair: Int): List[Double] = {
     val featureCols = features.cols + /*(features.cols - 1) * (features.cols) / 2*/ + 1
     val (weightVector: List[Double], _) = (0 to features.rows - 1).foldLeft((List.fill(featureCols)(initialWeight * 1.0), 0)) { (soFar: Tuple2[List[Double], Int], rowNum: Int) =>
       val expected = if (labels.get(rowNum, labelColumn) == correctPair) 1 else 0
@@ -161,7 +165,7 @@ class Perceptron(rand: Random) extends SupervisedLearner {
         soFar._1,
         trainingConstant
       )
-      if (stopEpochEarly && abs(elementSubtract(output, soFar._1).sum) < output.size * trainingConstant * 0.5) {
+      if (stopEpochEarly && abs(WeightOperations.elementSubtract(output, soFar._1).sum) < output.size * trainingConstant * 0.5) {
         if(soFar._2 + 1 > floor(features.rows * 0.1)) {
           if (verbose) println(s"Ending training early. Weight vector changed less than ${output.size * trainingConstant * 0.5} for ${floor(features.rows * 0.1)} successive tries on iteration $rowNum")
           return output
@@ -176,14 +180,14 @@ class Perceptron(rand: Random) extends SupervisedLearner {
   }
 
   private[this] def applyRowToTrainingModel(pattern: List[Double], expected: Double, weightVector: List[Double], trainingConstant: Double): List[Double] = {
-    val z = if (elementMultiply(pattern, weightVector).sum > 0) 1 else 0
+    val z = if (WeightOperations.elementMultiply(pattern, weightVector).sum > 0) 1 else 0
     val weightChange: List[Double] = if (z != expected) {
       pattern.map(_ * (trainingConstant * (expected - z)))
     } else {
       List.fill(pattern.length)(0)
     }
-    //println(s"Pattern: $pattern, Target: $expected, Weight Vector: $weightVector, Net: ${elementMultiply(pattern, weightVector).sum}, Output: $z, dW: $weightChange")
-    return elementAdd(weightVector, weightChange)
+    //println(s"Pattern: $pattern, Target: $expected, Weight Vector: $weightVector, Net: ${WeightOperations.elementMultiply(pattern, weightVector).sum}, Output: $z, dW: $weightChange")
+    return WeightOperations.elementAdd(weightVector, weightChange)
   }
 
   private[this] def unHashMatchedPairs[A](distinctVals: List[A], iter: Integer): (A, A) = {
@@ -202,21 +206,6 @@ class Perceptron(rand: Random) extends SupervisedLearner {
       pair1 * pair2
     }.toList*/
     return pattern /*++ append*/ ++ List(threshold * 1.0)
-  }
-
-  private[this] def elementMultiply(firstList: List[Double], secondList: List[Double]): List[Double] = {
-    require(firstList.size == secondList.size)
-    firstList.zip(secondList).map {case (val1: Double, val2: Double) => val1 * val2}
-  }
-
-  private[this] def elementAdd(firstList: List[Double], secondList: List[Double]): List[Double] = {
-    require(firstList.size == secondList.size)
-    firstList.zip(secondList).map {case (val1: Double, val2: Double) => val1 + val2}
-  }
-
-  private[this] def elementSubtract(firstList: List[Double], secondList: List[Double]): List[Double] = {
-    require(firstList.size == secondList.size)
-    firstList.zip(secondList).map {case (val1: Double, val2: Double) => val1 - val2}
   }
 
 }
