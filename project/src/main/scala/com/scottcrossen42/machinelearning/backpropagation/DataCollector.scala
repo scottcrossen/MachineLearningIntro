@@ -1,41 +1,21 @@
 package com.scottcrossen42.machinelearning.backpropagation
 
 class DataCollector(
-  val accuracyFunctionTrainingSet: (NeuralNet => Double),
-  val accuracyFunctionValidationSet: (NeuralNet => Double),
-  val meanSquaredErrorFunctionTrainingSet: (NeuralNet => Double),
-  val meanSquaredErrorFunctionValidationSet: (NeuralNet => Double),
-  val trainingAccuracy: List[Double] = List[Double](),
-  val validationAccuracy: List[Double] = List[Double](),
-  val trainingMse: List[Double] = List[Double](),
-  val validationMse: List[Double] = List[Double]()
+  val functions: List[(NeuralNet => Double)],
+  val dataOption: Option[List[List[Double]]] = None
 ) {
+  val data = dataOption.getOrElse(List.fill(functions.size)(List[Double]()))
 
   def addToValues(neuralNet: NeuralNet): DataCollector = {
-    val newTrainingAccuracy = trainingAccuracy :+ accuracyFunctionTrainingSet.apply(neuralNet)
-    val newValidationAccuracy = validationAccuracy :+ accuracyFunctionValidationSet.apply(neuralNet)
-    val newTrainingMse = trainingMse :+ meanSquaredErrorFunctionTrainingSet.apply(neuralNet)
-    val newValidationMse = validationMse :+ meanSquaredErrorFunctionValidationSet.apply(neuralNet)
-    new DataCollector(
-      accuracyFunctionTrainingSet,
-      accuracyFunctionValidationSet,
-      meanSquaredErrorFunctionTrainingSet,
-      meanSquaredErrorFunctionValidationSet,
-      newTrainingAccuracy,
-      newValidationAccuracy,
-      newTrainingMse,
-      newValidationMse
-    )
+    val newDataList: List[List[Double]] = (0 to functions.size - 1).map { iter: Int =>
+      val newData = functions(iter).apply(neuralNet)
+      data(iter) :+ newData
+    }.toList
+    new DataCollector(functions, Some(newDataList))
   }
 
-  def print = {
-    println("\nTraining Set Accuracy: ")
-    println(trainingAccuracy)
-    println("\nValidation Set Accuracy: ")
-    println(validationAccuracy)
-    println("\nTraining Set Mean Squared Error: ")
-    println(trainingMse)
-    println("\nValidation Set Mean Squared Error: ")
-    println(validationMse)
+  def print = (0 to data.size - 1).foreach { iter: Int =>
+    println(s"Printing collected data set $iter")
+    println(data(iter))
   }
 }

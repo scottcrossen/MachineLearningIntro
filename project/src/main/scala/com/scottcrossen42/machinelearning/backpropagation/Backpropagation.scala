@@ -29,10 +29,10 @@ class Backpropagation(rand: Random) extends SupervisedLearner {
       val meanSquaredErrorFunctionTrainingSet: (NeuralNet => Double) = getMeanSquaredErrorFunction(trainingFeatures, trainingLabels, iter)
       val meanSquaredErrorFunctionValidationSet: (NeuralNet => Double) = getMeanSquaredErrorFunction(validationFeatures, validationLabels, iter)
       val dataCollector = new DataCollector(
-        accuracyFunctionTrainingSet,
+        List(accuracyFunctionTrainingSet,
         accuracyFunctionValidationSet,
         meanSquaredErrorFunctionTrainingSet,
-        meanSquaredErrorFunctionValidationSet
+        meanSquaredErrorFunctionValidationSet)
       )
       val (newNeuralNet: NeuralNet, finalDataCollector: DataCollector) = trainNeuralNet(trainingFeatures, trainingLabels, neuralNet, iter, dataCollector, meanSquaredErrorFunctionValidationSet)
       if (verbose) finalDataCollector.print

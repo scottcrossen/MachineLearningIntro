@@ -24,10 +24,16 @@ public class Main {
         //manager.main(managerArgs4);
         String[] managerArgs5 = {"-L", "perceptron", "-A", dataDir + "voting.arff", "-E", "random", ".7"};
         //manager.main(managerArgs5);
-        String[] managerArgs6 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "random", ".75"};
+        String[] managerArgs6 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "random", ".7"};
         //manager.main(managerArgs6);
-        String[] managerArgs7 = {"-L", "Backpropagation", "-A", dataDir + "iris.arff", "-E", "random", ".7"};
-        manager.main(managerArgs7);
+        String[] managerArgs7 = {"-L", "Backpropagation", "-A", dataDir + "iris.arff", "-E", "random", ".75"};
+        //manager.main(managerArgs7);
+        String[] managerArgs8 = {"-L", "baseline", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
+        manager.main(managerArgs8);
+        String[] managerArgs10 = {"-L", "perceptron", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
+        manager.main(managerArgs10);
+        String[] managerArgs9 = {"-L", "Backpropagation", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
+        manager.main(managerArgs9);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;
