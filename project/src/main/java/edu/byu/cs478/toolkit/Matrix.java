@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.Map;
 import java.util.Random;
 import java.util.Iterator;
 import java.util.Set;
@@ -30,24 +31,30 @@ public class Matrix {
 	public Matrix() {}
 
 	// Copies the specified portion of that matrix into this matrix
-	public Matrix(Matrix that, int rowStart, int colStart, int rowCount, int colCount, Set goodRows) {
+	public Matrix(Matrix that, Set keepRows, Set keepCols) {
 		m_data = new ArrayList< double[] >();
-		for(int j = 0; j < rowCount; j++) {
-      if (goodRows.contains(j)) {
-  			double[] rowSrc = that.row(rowStart + j);
-  			double[] rowDest = new double[colCount];
-  			for(int i = 0; i < colCount; i++)
-  				rowDest[i] = rowSrc[colStart + i];
+		for(int j = 0; j < that.rows(); j++) {
+      if (keepRows.contains(j)) {
+  			double[] rowSrc = that.row(j);
+  			double[] rowDest = new double[keepCols.size()];
+        int newRowPos = 0;
+  			for(int i = 0; i < that.cols(); i++) {
+          if (keepCols.contains(i)) {
+  				   rowDest[newRowPos++] = rowSrc[i];
+          }
+        }
   			m_data.add(rowDest);
       }
 		}
 		m_attr_name = new ArrayList<String>();
 		m_str_to_enum = new ArrayList< TreeMap<String, Integer> >();
 		m_enum_to_str = new ArrayList< TreeMap<Integer, String> >();
-		for(int i = 0; i < colCount; i++) {
-			m_attr_name.add(that.attrName(colStart + i));
-			m_str_to_enum.add(that.m_str_to_enum.get(colStart + i));
-			m_enum_to_str.add(that.m_enum_to_str.get(colStart + i));
+		for(int i = 0; i < that.cols(); i++) {
+      if (keepCols.contains(i)) {
+  			m_attr_name.add(that.attrName(i));
+  			m_str_to_enum.add(that.m_str_to_enum.get(i));
+  			m_enum_to_str.add(that.m_enum_to_str.get(i));
+      }
 		}
 	}
 
@@ -221,6 +228,13 @@ public class Matrix {
 	// Returns the specified row
 	public double[] row(int r) { return m_data.get(r); }
 
+	// Returns the specified row
+	public double[] col(int c) {
+		double[] output = new double[rows()];
+		for(int i=0; i<output.length; i++) output[i] = m_data.get(i)[c];
+		return output;
+	}
+
 	// Returns the element at the specified row and column
 	public double get(int r, int c) { return m_data.get(r)[c]; }
 
@@ -236,6 +250,8 @@ public class Matrix {
 	// Returns the name of the specified value
 	public String attrValue(int attr, int val) { return m_enum_to_str.get(attr).get(val); }
 	public int attrValue(int attr, String val) { return m_str_to_enum.get(attr).get(val); }
+
+  public Map<Integer, String> getAttrValues(int attr) { return m_enum_to_str.get(attr); }
 
 	// Returns the number of values associated with the specified attribute (or column)
 	// 0=continuous, 2=binary, 3=trinary, etc.

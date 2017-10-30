@@ -50,8 +50,8 @@ class Perceptron(rand: Random) extends SupervisedLearner {
         val weightVectors = (0 to amntPairings - 1).map { iter: Int =>
           val (pair1: Int, pair2: Int) = unHashMatchedPairs(distinctVals, iter)
           val goodRows = (0 to features.rows - 1).filter((rowNum) => (labels.get(rowNum, colNum) == pair1 || labels.get(rowNum, colNum) == pair2)).toList
-          val goodFeatures = new Matrix(features, 0, 0, features.rows, features.cols, goodRows.toSet.asJava)
-          val goodLabels = new Matrix(labels, 0, 0, labels.rows, labels.cols, goodRows.toSet.asJava)
+          val goodFeatures = new Matrix(features, goodRows.toSet.asJava, (0 to features.cols - 1).toSet.asJava)
+          val goodLabels = new Matrix(labels, goodRows.toSet.asJava, (0 to labels.cols - 1).toSet.asJava)
           val newWeightVector = applyManyEpochs(colNum, goodFeatures, goodLabels, pair1)
           if (verbose) println(s"Perceptron between pairing ${labels.attrValue(colNum, pair1)} and ${labels.attrValue(colNum, pair2)} returned final weight vector $newWeightVector")
           newWeightVector
@@ -74,8 +74,8 @@ class Perceptron(rand: Random) extends SupervisedLearner {
         val goodRows = (0 to features.rows - 1).toList
         val weightVector = (0 to amntValues - 1).map { iter: Int =>
           val pair1: Int = distinctVals(iter)
-          val goodFeatures = new Matrix(features, 0, 0, features.rows, features.cols, goodRows.toSet.asJava)
-          val goodLabels = new Matrix(labels, 0, 0, labels.rows, labels.cols, goodRows.toSet.asJava)
+          val goodFeatures = new Matrix(features, goodRows.toSet.asJava, (0 to features.cols - 1).toSet.asJava)
+          val goodLabels = new Matrix(labels, goodRows.toSet.asJava, (0 to labels.cols - 1).toSet.asJava)
           val newWeightVector = applyManyEpochs(colNum, goodFeatures, goodLabels, pair1)
           if (verbose) println(s"Perceptron for ${labels.attrValue(colNum, pair1)} returned final weight vector $newWeightVector")
           newWeightVector

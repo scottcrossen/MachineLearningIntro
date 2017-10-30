@@ -10,6 +10,7 @@ import java.util.Random;
 import java.io.File;
 import com.scottcrossen42.machinelearning.perceptron.Perceptron;
 import com.scottcrossen42.machinelearning.backpropagation.Backpropagation;
+import com.scottcrossen42.machinelearning.decisiontree.DecisionTree;
 
 
 public class MLSystemManager {
@@ -22,8 +23,7 @@ public class MLSystemManager {
 		if (model.equals("baseline")) return new BaselineLearner();
 		else if (model.equals("perceptron")) return new Perceptron(rand);
 		else if (model.equals("Backpropagation")) return new Backpropagation(rand);
-		// else if (model.equals("neuralnet")) return new NeuralNet(rand);
-		// else if (model.equals("decisiontree")) return new DecisionTree();
+		else if (model.equals("decisiontree")) return new DecisionTree();
 		// else if (model.equals("knn")) return new InstanceBasedLearner();
 		else throw new Exception("Unrecognized model: " + model);
 	}
