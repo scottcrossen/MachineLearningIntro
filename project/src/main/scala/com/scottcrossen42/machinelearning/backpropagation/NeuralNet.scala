@@ -5,14 +5,14 @@ import com.scottcrossen42.machinelearning.utility.RandomWeightGenerator
 import com.scottcrossen42.machinelearning.utility.WeightOperations
 import scala.collection.JavaConverters._
 
-class NeuralNet(
+case class NeuralNet(
   private val features: Int,
   private val outputs: Int,
-  private[this] val newHiddenLayer: Option[List[Neuron]] = None,
-  private[this] val newOutputLayer: Option[List[Neuron]] = None
+  private val newHiddenLayer: Option[List[Neuron]] = None,
+  private val newOutputLayer: Option[List[Neuron]] = None
 ) {
-  private val hiddenLayer: List[Neuron] = newHiddenLayer.getOrElse(List.fill(features * 2)(new Neuron(features)))
-  private val outputLayer: List[Neuron] = newOutputLayer.getOrElse(List.fill(outputs)(new Neuron(features * 2)))
+  val hiddenLayer: List[Neuron] = newHiddenLayer.getOrElse(List.fill(features * 2)(Neuron(features)))
+  val outputLayer: List[Neuron] = newOutputLayer.getOrElse(List.fill(outputs)(Neuron(features * 2)))
 
   def getHiddenLayerOutputs(inputs: List[Double]): List[Double] = hiddenLayer.map( _.calcOutput(inputs) )
   def getOutputLayerOutputs(inputs: List[Double]): List[Double] = outputLayer.map( _.calcOutput(inputs) )
@@ -25,7 +25,7 @@ class NeuralNet(
   def updateAllLayerWeights(featureOutputs: List[Double], hiddenLayerOutputs: List[Double], outputLayerErrors: List[Double], learningRate: Double, momentum: Double) = {
     val newHiddenLayer: List[Neuron] = updateHiddenLayerWeights(featureOutputs, hiddenLayerOutputs, outputLayerErrors, learningRate, momentum)
     val newOutputLayer: List[Neuron] = updateOutputLayerWeights(hiddenLayerOutputs, outputLayerErrors, learningRate, momentum)
-    new NeuralNet(features, outputs, Some(newHiddenLayer), Some(newOutputLayer))
+    NeuralNet(features, outputs, Some(newHiddenLayer), Some(newOutputLayer))
   }
 
   private[this] def updateHiddenLayerWeights(originalInput: List[Double], hiddenLayerOutputs: List[Double], outputLayerErrors: List[Double], learningRate: Double, momentum: Double): List[Neuron] = (0 to hiddenLayer.size - 1).map { iter: Int =>

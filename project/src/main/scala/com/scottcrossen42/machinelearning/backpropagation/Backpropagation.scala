@@ -6,6 +6,7 @@ import java.util.Random
 import com.scottcrossen42.machinelearning.utility.RandomWeightGenerator
 import com.scottcrossen42.machinelearning.utility.WeightOperations
 import com.scottcrossen42.machinelearning.utility.MatrixOperations
+import com.scottcrossen42.machinelearning.utility.DataCollector
 import scala.collection.JavaConverters._
 import edu.byu.cs478.toolkit.BaselineLearner
 
@@ -25,17 +26,18 @@ class Backpropagation(rand: Random) extends SupervisedLearner {
     currentNeuralNets = (0 to labels.cols - 1).map{ (iter: Int) =>
       val neuralNet: NeuralNet = getNeuralNet(features.cols, labels.valueCount(iter), iter)
       if (verbose) println("\nNeural Net initialized")
+      // The DataCollector[NeuralNet] class makes gathering data slightly easier
       val accuracyFunctionTrainingSet: (NeuralNet => Double) = getAccuracyFunction(trainingFeatures, trainingLabels, iter)
       val accuracyFunctionValidationSet: (NeuralNet => Double) = getAccuracyFunction(validationFeatures, validationLabels, iter)
       val meanSquaredErrorFunctionTrainingSet: (NeuralNet => Double) = getMeanSquaredErrorFunction(trainingFeatures, trainingLabels, iter)
       val meanSquaredErrorFunctionValidationSet: (NeuralNet => Double) = getMeanSquaredErrorFunction(validationFeatures, validationLabels, iter)
-      val dataCollector = new DataCollector(
+      val dataCollector = DataCollector[NeuralNet](
         List(accuracyFunctionTrainingSet,
         accuracyFunctionValidationSet,
         meanSquaredErrorFunctionTrainingSet,
         meanSquaredErrorFunctionValidationSet)
       )
-      val (newNeuralNet: NeuralNet, finalDataCollector: DataCollector) = trainNeuralNet(trainingFeatures, trainingLabels, neuralNet, iter, dataCollector, meanSquaredErrorFunctionValidationSet)
+      val (newNeuralNet: NeuralNet, finalDataCollector: DataCollector[NeuralNet]) = trainNeuralNet(trainingFeatures, trainingLabels, neuralNet, iter, dataCollector, meanSquaredErrorFunctionValidationSet)
       if (verbose) finalDataCollector.print
       newNeuralNet
     }.toList
@@ -52,7 +54,7 @@ class Backpropagation(rand: Random) extends SupervisedLearner {
   private[this] def getNeuralNet(features: Int, outputs: Int, labelNum: Int): NeuralNet = {
     if (labelNum >= currentNeuralNets.size) {
       // Net doesn't exist for label
-      new NeuralNet(features, outputs)
+      NeuralNet(features, outputs)
     } else {
       // Net exists for label
       currentNeuralNets(labelNum)
@@ -115,22 +117,22 @@ object Backpropagation {
     }
   }
 
-  private def trainNeuralNet(features: Matrix, labels: Matrix, neuralNet: NeuralNet, labelNum: Int, dataCollector: DataCollector, meanSquaredErrorFunction: (NeuralNet => Double)): (NeuralNet, DataCollector) = {
+  private def trainNeuralNet(features: Matrix, labels: Matrix, neuralNet: NeuralNet, labelNum: Int, dataCollector: DataCollector[NeuralNet], meanSquaredErrorFunction: (NeuralNet => Double)): (NeuralNet, DataCollector[NeuralNet]) = {
     val baseMSE: Double = meanSquaredErrorFunction.apply(neuralNet)
-    val (_, newNeuralNet: NeuralNet, mse: Double, _, finalDataCollector: DataCollector) = (0 to maxEpochs - 1).foldLeft((neuralNet, neuralNet, baseMSE, 0, dataCollector)) { (soFar: Tuple5[NeuralNet, NeuralNet, Double, Int, DataCollector], epochNum: Int) =>
+    val (_, newNeuralNet: NeuralNet, mse: Double, _, finalDataCollector: DataCollector[NeuralNet]) = (0 to maxEpochs - 1).foldLeft((neuralNet, neuralNet, baseMSE, 0, dataCollector)) { (soFar: Tuple5[NeuralNet, NeuralNet, Double, Int, DataCollector[NeuralNet]], epochNum: Int) =>
       val oldNet: NeuralNet = soFar._1
       val bssfNet: NeuralNet = soFar._2
       val bssfScore: Double = soFar._3
       val iterationsUnchanged: Int = soFar._4
-      val dataCollector: DataCollector = soFar._5
+      val dataCollector: DataCollector[NeuralNet] = soFar._5
       if (epochNum > 0) features.shuffle(RandomWeightGenerator.getRand, labels)
       val newNet: NeuralNet = presentEpoch(features, labels, oldNet, labelNum)
       val newNetScore: Double = meanSquaredErrorFunction.apply(newNet)
       val newDataCollector = dataCollector.addToValues(newNet)
       if (bssfScore <= newNetScore) {
         if (iterationsUnchanged + 1 >= endEarlyEpochIterations) {
-          println(s"\nEnding training early. Neural Net did not improve beyond best for $endEarlyEpochIterations successive epochs on epoch #$epochNum")
-          println(s"Final mean-squared-error $bssfScore")
+          if (verbose) println(s"\nEnding training early. Neural Net did not improve beyond best for $endEarlyEpochIterations successive epochs on epoch #$epochNum")
+          if (verbose) println(s"Final mean-squared-error $bssfScore")
           return (bssfNet, newDataCollector)
         } else {
           (newNet, bssfNet, bssfScore, iterationsUnchanged + 1, newDataCollector)
@@ -139,8 +141,8 @@ object Backpropagation {
         (newNet, newNet, newNetScore, 0, newDataCollector)
       }
     }
-    println(s"\nMax Epoch limit reached during training.")
-    println(s"Final mean-squared-error $mse")
+    if (verbose) println(s"\nMax Epoch limit reached during training.")
+    if (verbose) println(s"Final mean-squared-error $mse")
     return (newNeuralNet, finalDataCollector)
   }
 

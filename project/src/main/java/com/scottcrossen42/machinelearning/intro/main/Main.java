@@ -28,16 +28,14 @@ public class Main {
         //manager.main(managerArgs6);
         String[] managerArgs7 = {"-L", "Backpropagation", "-A", dataDir + "iris.arff", "-E", "random", ".75"};
         //manager.main(managerArgs7);
-        String[] managerArgs8 = {"-L", "baseline", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
+        String[] managerArgs8 = {"-L", "Backpropagation", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
         //manager.main(managerArgs8);
-        String[] managerArgs9 = {"-L", "Backpropagation", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
+        String[] managerArgs9 = {"-L", "decisiontree", "-A", dataDir + "lenses.arff", "-E", "random", ".75"};
         //manager.main(managerArgs9);
-        String[] managerArgs10 = {"-L", "decisiontree", "-A", dataDir + "lenses.arff", "-E", "random", ".75"};
-        //manager.main(managerArgs10);
-        String[] managerArgs11 = {"-L", "decisiontree", "-A", dataDir + "cars.arff", "-E", "cross", "10"};
+        String[] managerArgs10 = {"-L", "decisiontree", "-A", dataDir + "cars.arff", "-E", "cross", "10"};
+        manager.main(managerArgs10);
+        String[] managerArgs11 = {"-L", "decisiontree", "-A", dataDir + "voting_full.arff", "-E", "cross", "10"};
         manager.main(managerArgs11);
-        String[] managerArgs12 = {"-L", "decisiontree", "-A", dataDir + "voting_full.arff", "-E", "cross", "10"};
-        manager.main(managerArgs12);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;
