@@ -1,0 +1,1027 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     41940,       1019]
+NotebookOptionsPosition[     38505,        925]
+NotebookOutlinePosition[     38841,        940]
+CellTagsIndexPosition[     38798,        937]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["CS 478", "Title",
+ CellChangeTimes->{{3.71408760230179*^9, 
+  3.714087611098291*^9}},ExpressionUUID->"0ea8ceef-b625-4561-960e-\
+805e2d7abe95"],
+
+Cell[CellGroupData[{
+
+Cell["Scott Leland Crossen", "Chapter",
+ CellChangeTimes->{{3.7140876243962173`*^9, 
+  3.7140876304086657`*^9}},ExpressionUUID->"4d9b8035-c822-4366-b5a6-\
+2c9dd65a821f"],
+
+Cell[CellGroupData[{
+
+Cell["Perceptron Project", "Section",
+ CellChangeTimes->{{3.714087640860614*^9, 3.714087656173686*^9}, {
+  3.714958368302826*^9, 
+  3.7149583743124866`*^9}},ExpressionUUID->"7c61c781-d601-429a-bdfb-\
+99031f0745b5"],
+
+Cell[CellGroupData[{
+
+Cell["Part 1", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 
+  3.714958413911687*^9}},ExpressionUUID->"256f3755-1555-48fe-82b8-\
+384777f3bcb6"],
+
+Cell["\<\
+The code that implements the ID3 decision tree algorithm is included with the \
+submission of this project. It is written in Scala and follows the functional \
+paradigm. Immutability is observed in all but the underlying learner. Unknown \
+attributes are handled in accordance with the class suggestions as well as \
+the other ways discussed in part 6. To check the algorithm, the lenses data \
+set returned an accuracy between 66% and 100% on a non-pruned 75/25 \
+testing/training split.\
+\>", "Text",
+ CellChangeTimes->{{3.714958438342319*^9, 3.7149584924652348`*^9}, {
+  3.714958760316622*^9, 3.7149587611832123`*^9}, {3.716912053794919*^9, 
+  3.716912080870023*^9}, {3.718412407659308*^9, 3.718412476784977*^9}, {
+  3.7184131058479443`*^9, 
+  3.7184131747579727`*^9}},ExpressionUUID->"77bea2d1-4ffd-4091-ae0b-\
+63db8c6fe059"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Part 2", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 3.714958413911687*^9}, {3.718412485276532*^9, 
+  3.718412491251811*^9}},ExpressionUUID->"7eff26a4-a034-488a-9adf-\
+84761db94a67"],
+
+Cell["\<\
+As per the TAs suggestion, I used method 1 of part 6 described in this report \
+when handling missing values.\
+\>", "Text",
+ CellChangeTimes->{{3.7184129218189163`*^9, 3.71841293772896*^9}, {
+  3.718413197188931*^9, 
+  3.718413198433536*^9}},ExpressionUUID->"59b3b843-182a-4015-9c3c-\
+7186f9a1d5a3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"carsData", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "0.9476744186046512", ",", " ", "0.9710982658959537", ",", " ", 
+     "0.9653179190751445", ",", " ", "0.9190751445086706", ",", " ", 
+     "0.9364161849710982", ",", " ", "0.9476744186046512", ",", " ", 
+     "0.9132947976878613", ",", " ", "0.930635838150289", ",", " ", 
+     "0.9653179190751445", ",", " ", "0.9479768786127167"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"carsAvg", " ", "=", " ", "0.9444481785186183"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"votingData", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "0.9069767441860465", ",", " ", "0.8636363636363636", ",", " ", 
+     "0.9767441860465116", ",", " ", "0.9545454545454546", ",", " ", 
+     "0.9069767441860465", ",", " ", "0.9318181818181818", ",", " ", "1.0", 
+     ",", " ", "0.9772727272727273", ",", " ", "1.0", ",", " ", 
+     "0.9318181818181818"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"votingAvg", " ", "=", "0.9449788583509514"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Labeled", "[", 
+  RowBox[{
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Text", "@", 
+          RowBox[{"Style", "[", 
+           RowBox[{"#", ",", "\"\<TableHeader\>\"", ",", " ", "Bold"}], 
+           "]"}]}], "&"}], "/@", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Fold\>\"", ",", "\"\<Cars Accuracy\>\"", ",", 
+          "\"\<Voting Accuracy\>\""}], "}"}]}], ",", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Column", "[", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"StringForm", "[", 
+               RowBox[{"\"\<``\>\"", ",", 
+                RowBox[{"IntegerString", "[", " ", 
+                 RowBox[{"#", ",", "10", ",", "2"}], "]"}]}], "]"}], "&"}], "/@", 
+             RowBox[{"Range", "[", "10", "]"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"Style", "[", 
+              RowBox[{"\"\<Avg\>\"", ",", "Bold"}], "]"}], "}"}]}], "]"}], 
+          "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"carsData", "[", 
+               RowBox[{"[", "#", "]"}], "]"}], "&"}], "/@", 
+             RowBox[{"Range", "[", "10", "]"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"Style", "[", 
+              RowBox[{"carsAvg", ",", "Bold"}], "]"}], "}"}]}], "]"}], "]"}], 
+         ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"votingData", "[", 
+               RowBox[{"[", "#", "]"}], "]"}], "&"}], "/@", 
+             RowBox[{"Range", "[", "10", "]"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"Style", "[", 
+              RowBox[{"votingAvg", ",", "Bold"}], "]"}], "}"}]}], "]"}], 
+          "]"}]}], "\[IndentingNewLine]", "}"}]}], "}"}], ",", 
+     RowBox[{"Alignment", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Center", ",", 
+        RowBox[{"{", 
+         RowBox[{"Bottom", ",", "Top"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"Frame", "\[Rule]", "All"}], ",", 
+     RowBox[{"ItemSize", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"5", ",", "10", ",", "10"}], "}"}], "}"}]}], ",", 
+     RowBox[{"Spacings", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}]}], "]"}], ",", 
+   RowBox[{"Text", "@", 
+    RowBox[{"Style", "[", 
+     RowBox[{"\"\<Accuracy of Testing Sets\>\"", ",", "\"\<Text\>\""}], 
+     "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7184132612824707`*^9, 3.7184132877837543`*^9}, {
+  3.7184133189722347`*^9, 3.718413373350691*^9}, {3.718413406411374*^9, 
+  3.718413574732964*^9}, {3.718413606411416*^9, 3.71841373133887*^9}, {
+  3.718413778407436*^9, 3.718413872768824*^9}, {3.718413912035989*^9, 
+  3.718414174094191*^9}, {3.7184142749321327`*^9, 3.718414337248416*^9}, {
+  3.7184143690573883`*^9, 3.718414463079186*^9}, {3.718414634448637*^9, 
+  3.718414636366496*^9}, {3.718414999273177*^9, 
+  3.718415074796667*^9}},ExpressionUUID->"cfc703a7-1d9d-402f-9b84-\
+e3a4e6eeea5d"],
+
+Cell[BoxData[
+ TemplateBox[{TagBox[
+    GridBox[{{
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox["\"Fold\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Fold", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Cars Accuracy\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Cars Accuracy", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Voting Accuracy\"", "TableHeader", Bold, StripOnInput -> False],
+            TextForm]], "InlineText"], 
+        Text[
+         Style["Voting Accuracy", "TableHeader", Bold]]]}, {
+       TagBox[
+        GridBox[{{
+           InterpretationBox["\"01\"", 
+            StringForm["``", "01"], Editable -> False]}, {
+           InterpretationBox["\"02\"", 
+            StringForm["``", "02"], Editable -> False]}, {
+           InterpretationBox["\"03\"", 
+            StringForm["``", "03"], Editable -> False]}, {
+           InterpretationBox["\"04\"", 
+            StringForm["``", "04"], Editable -> False]}, {
+           InterpretationBox["\"05\"", 
+            StringForm["``", "05"], Editable -> False]}, {
+           InterpretationBox["\"06\"", 
+            StringForm["``", "06"], Editable -> False]}, {
+           InterpretationBox["\"07\"", 
+            StringForm["``", "07"], Editable -> False]}, {
+           InterpretationBox["\"08\"", 
+            StringForm["``", "08"], Editable -> False]}, {
+           InterpretationBox["\"09\"", 
+            StringForm["``", "09"], Editable -> False]}, {
+           InterpretationBox["\"10\"", 
+            StringForm["``", "10"], Editable -> False]}, {
+           StyleBox["\"Avg\"", Bold, StripOnInput -> False]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"0.9476744186046512`"}, {"0.9710982658959537`"}, {
+          "0.9653179190751445`"}, {"0.9190751445086706`"}, {
+          "0.9364161849710982`"}, {"0.9476744186046512`"}, {
+          "0.9132947976878613`"}, {"0.930635838150289`"}, {
+          "0.9653179190751445`"}, {"0.9479768786127167`"}, {
+           StyleBox["0.9444481785186183`", Bold, StripOnInput -> False]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"0.9069767441860465`"}, {"0.8636363636363636`"}, {
+          "0.9767441860465116`"}, {"0.9545454545454546`"}, {
+          "0.9069767441860465`"}, {"0.9318181818181818`"}, {"1.`"}, {
+          "0.9772727272727273`"}, {"1.`"}, {"0.9318181818181818`"}, {
+           StyleBox["0.9449788583509514`", Bold, StripOnInput -> False]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"]}}, 
+     GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {Bottom, Top}}, 
+     AutoDelete -> False, 
+     GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+     GridBoxItemSize -> {"Columns" -> {5, 10, 10}}, 
+     GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{1}}}], "Grid"],
+   InterpretationBox[
+    Cell[
+     BoxData[
+      FormBox[
+       StyleBox[
+       "\"Accuracy of Testing Sets\"", "Text", StripOnInput -> False], 
+       TextForm]], "InlineText"], 
+    Text[
+     Style["Accuracy of Testing Sets", "Text"]]]},
+  "Labeled",
+  DisplayFunction->(GridBox[{{
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, 
+    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+    BaselinePosition -> {2, 1}]& ),
+  InterpretationFunction->(RowBox[{"Labeled", "[", 
+     RowBox[{#, ",", #2, ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], 
+     "]"}]& )]], "Output",
+ CellChangeTimes->{{3.7184141184025383`*^9, 3.7184141245332747`*^9}, {
+   3.7184141555877542`*^9, 3.7184141597794333`*^9}, {3.7184142823163347`*^9, 
+   3.7184143875735617`*^9}, {3.718414435622611*^9, 3.718414463403528*^9}, 
+   3.718414637008676*^9, {3.718415000715948*^9, 3.718415007838889*^9}, {
+   3.7184150399724903`*^9, 
+   3.7184150750765867`*^9}},ExpressionUUID->"4012e00b-413b-420d-b352-\
+820a2b1690fb"]
+}, {2}]],
+
+Cell["\<\
+Which is within the expected range given in the problem. Note that without a \
+stopping criteria the training accuracy will be 100% as long as there are no \
+two identical feature selections that have different labels. If this \
+condition does not exist then there will be at least one non-pure leaf node \
+in the resulting tree. In my opinion it is also likely that the unity \
+accuracies on the 7th and 9th folds for the voting set can be attributed to \
+duplicate features in the testing sets.\
+\>", "Text",
+ CellChangeTimes->{{3.718412748017174*^9, 3.71841288934945*^9}, {
+  3.718415095242128*^9, 
+  3.718415206975882*^9}},ExpressionUUID->"7a3a2678-dddc-4885-8438-\
+0b7246ab248f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Part 3", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 3.714958413911687*^9}, {3.7184124865603447`*^9, 
+  3.71841249400054*^9}},ExpressionUUID->"e94a9be2-d7b7-4ab7-a490-\
+33b127e7b8a6"],
+
+Cell[CellGroupData[{
+
+Cell["Cars Set", "Subsubsection",
+ CellChangeTimes->{{3.718415403264474*^9, 3.718415404880677*^9}, {
+  3.718415938799758*^9, 
+  3.718415939453178*^9}},ExpressionUUID->"3a6cb89d-2072-4f7b-80cc-\
+ae8f0253de5e"],
+
+Cell["\<\
+For the cars data set, the most important features appeared to be \
+\[OpenCurlyDoubleQuote]safety\[CloseCurlyDoubleQuote] (usually the root node) \
+and \[OpenCurlyDoubleQuote]persons\[CloseCurlyDoubleQuote] (the next most \
+important node for the next 2/3 of the branches). One interesting behavior \
+was that the tree would form a pure node at the low-safety branch of the root \
+node. Unlike the voting set, this tree would usually define itself to a depth \
+equal to the amount of features. Because of the limited amount of features \
+and the large amount of data, the tree was usually very shallow but very \
+wide. As mentioned the \[OpenCurlyDoubleQuote]safety\[CloseCurlyDoubleQuote] \
+and \[OpenCurlyDoubleQuote]persons\[CloseCurlyDoubleQuote]  attributes were \
+the features that most distinctly partitioned the data in the best groups. \
+This data set doesn\[CloseCurlyQuote]t seem to have missing values and so did \
+not form any interesting structures because of that.\
+\>", "Text",
+ CellChangeTimes->{{3.7184152962307*^9, 3.718415542880766*^9}, {
+  3.718415606013907*^9, 3.718415632898273*^9}, {3.7184156651779118`*^9, 
+  3.718415790454507*^9}, {3.718415827189917*^9, 3.7184159335876293`*^9}, {
+  3.718415979754056*^9, 3.718416018039798*^9}, {3.718416050403199*^9, 
+  3.718416329618218*^9}},ExpressionUUID->"f22d886b-bdf3-490a-9f01-\
+987ce5236744"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Voting Set", "Subsubsection",
+ CellChangeTimes->{{3.718415403264474*^9, 
+  3.718415404880677*^9}},ExpressionUUID->"16e4c776-173a-4ccc-866f-\
+c752adb88919"],
+
+Cell["\<\
+For every fold in the voting set the root node was \
+\[OpenCurlyDoubleQuote]physician-fee-freeze\[CloseCurlyDoubleQuote]. \
+Consequently the next nodes down were \
+\[OpenCurlyDoubleQuote]synfuels-corporation-cutback\[CloseCurlyDoubleQuote] \
+for the \[OpenCurlyDoubleQuote]yes\[CloseCurlyDoubleQuote] branch and \
+\[OpenCurlyDoubleQuote]adoption-of-the-budget-resolution\
+\[CloseCurlyDoubleQuote] for the \[OpenCurlyDoubleQuote]no\
+\[CloseCurlyDoubleQuote] branch. This means that without fail the most import \
+attributes were these three. They were the features that most distinctly \
+partitioned the data in the best groups. Interestingly, there were 16 \
+features in the voting data set but each tree showed a maximum depth of about \
+6 features. This means that 10 of the included features are redundant. It\
+\[CloseCurlyQuote]s possible that they are all used except in different \
+branches but this doesn\[CloseCurlyQuote]t seem to be the case as there are a \
+few features that are obviously not included just by observation. Another \
+interesting fact is that those rows with missing data are often easily \
+classified with method 1 of part 6 of this report.\
+\>", "Text",
+ CellChangeTimes->{{3.7184152962307*^9, 3.718415542880766*^9}, {
+  3.718415606013907*^9, 3.718415632898273*^9}, {3.7184156651779118`*^9, 
+  3.718415790454507*^9}, {3.718415827189917*^9, 
+  3.7184159335876293`*^9}},ExpressionUUID->"feb7a2f9-2369-4907-bc3a-\
+98101f0c934c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Part 4", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 3.714958413911687*^9}, {3.718412488532412*^9, 
+  3.718412495144848*^9}},ExpressionUUID->"9851359c-96a2-4e1c-9b40-\
+469217bd2477"],
+
+Cell["\<\
+In order to choose a good method for which to use for handling missing values \
+I decided to speak with a TA. After discussing the problem with him, I came \
+up with a few good ways to handle the situation. I implemented the best three \
+but am basing the first few problems of this report on the first method \
+described. The rest are described in part 6 of this report. The first method \
+involves treating missing values as a separate enumeration of the selected \
+feature by themselves. This would form missing-value nodes that would total \
+the probabilities of the likely results for use in prediction. It\
+\[CloseCurlyQuote]s possible that these nodes won\[CloseCurlyQuote]t be \
+formed for every instance of testing data so in these cases the node would \
+defer evaluation of the attribute row to all of it\[CloseCurlyQuote]s \
+children. The child nodes would recursively return label predictions with \
+associated certainties. The parent node would then dot-product the prediction \
+certainties with the node frequency for each child to get a set of \
+probabilities per label for each child. It would then sum similar-label \
+across all children probabilities and pick the largest as the prediction.
+
+I used this approach mostly because the TA suggested it and I wanted to get \
+full points for the project (just being honest here). However, I did have to \
+use some invention to handle the case of testing data that included \
+missing-nodes never seen in the training set. I found that what I did worked \
+very well. This method reduced the missing-value problem to base \
+probabilities the best and so I used it.\
+\>", "Text",
+ CellChangeTimes->{{3.718416475944387*^9, 
+  3.7184171115580177`*^9}},ExpressionUUID->"5bdf0979-0cc8-4bec-ad41-\
+50cc69532735"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Part 5", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 3.714958413911687*^9}, {3.718412496435363*^9, 
+  3.7184124968648*^9}},ExpressionUUID->"7fd6677d-535e-4554-b553-2e85d46af5bb"],
+
+Cell["\<\
+For this part I used a 75/25 training/validation split on the training data. \
+The same ratio was also used on the training/testing split of the data.\
+\>", "Text",
+ CellChangeTimes->{{3.718417132289146*^9, 3.71841716180285*^9}, {
+  3.718417685797153*^9, 
+  3.718417706190033*^9}},ExpressionUUID->"28301a0a-0d20-4add-8456-\
+a80bcbedc69e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Labeled", "[", 
+  RowBox[{
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Text", "@", 
+          RowBox[{"Style", "[", 
+           RowBox[{"#", ",", "\"\<TableHeader\>\"", ",", " ", "Bold"}], 
+           "]"}]}], "&"}], "/@", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Parameter\>\"", ",", "\"\<Cars Unpruned\>\"", ",", 
+          "\"\<Voting Unpruned\>\"", ",", "\"\<Cars Pruned\>\"", ",", 
+          "\"\<Voting Pruned\>\""}], "}"}]}], ",", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<#Nodes\>\"", ",", "Bold"}], "]"}], ",", 
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<Depth\>\"", ",", "Bold"}], "]"}], ",", 
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<Accuracy\>\"", ",", "Bold"}], "]"}]}], "}"}], "]"}],
+          ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"371", ",", " ", "7", ",", " ", "0.9444481785186183"}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"58", ",", " ", "9", ",", " ", "0.9449788583509514"}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"255", ",", " ", "7", ",", " ", "0.9259259259259259"}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"20", ",", " ", "6", ",", " ", "0.96824770642201835"}], 
+           "}"}], "]"}], ","}], "\[IndentingNewLine]", "}"}]}], "}"}], ",", 
+     RowBox[{"Alignment", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Center", ",", 
+        RowBox[{"{", 
+         RowBox[{"Bottom", ",", "Top"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"Frame", "\[Rule]", "All"}], ",", 
+     RowBox[{"ItemSize", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"8", ",", "10", ",", "10", ",", "10", ",", "10"}], "}"}], 
+       "}"}]}], ",", 
+     RowBox[{"Spacings", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}]}], "]"}], ",", 
+   RowBox[{"Text", "@", 
+    RowBox[{"Style", "[", 
+     RowBox[{"\"\<Pruned/Unpruned Comparison\>\"", ",", "\"\<Text\>\""}], 
+     "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.718417714646366*^9, 3.718417775524887*^9}, {
+  3.7184178183949127`*^9, 3.71841790747154*^9}, {3.7184182375847483`*^9, 
+  3.718418238779479*^9}, {3.718418268887752*^9, 3.718418301287201*^9}, {
+  3.718418331547007*^9, 3.718418359673985*^9}, {3.718418469398169*^9, 
+  3.718418583769341*^9}, {3.718418619616624*^9, 3.718418625992259*^9}, {
+  3.718418718973741*^9, 3.7184187201896152`*^9}, {3.7184196281955557`*^9, 
+  3.718419636087462*^9}},ExpressionUUID->"b74a63a8-0cf3-49ac-b140-\
+3c4029ff8751"],
+
+Cell[BoxData[
+ TemplateBox[{TagBox[
+    GridBox[{{
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Parameter\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Parameter", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Cars Unpruned\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Cars Unpruned", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Voting Unpruned\"", "TableHeader", Bold, StripOnInput -> False],
+            TextForm]], "InlineText"], 
+        Text[
+         Style["Voting Unpruned", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Cars Pruned\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Cars Pruned", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Voting Pruned\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Voting Pruned", "TableHeader", Bold]]], ""}, {
+       TagBox[
+        GridBox[{{
+           StyleBox["\"#Nodes\"", Bold, StripOnInput -> False]}, {
+           StyleBox["\"Depth\"", Bold, StripOnInput -> False]}, {
+           StyleBox["\"Accuracy\"", Bold, StripOnInput -> False]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"371"}, {"7"}, {"0.9444481785186183`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"58"}, {"9"}, {"0.9449788583509514`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"255"}, {"7"}, {"0.9259259259259259`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"20"}, {"6"}, {"0.9682477064220183`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       ""}}, GridBoxAlignment -> {
+      "Columns" -> {{Center}}, "Rows" -> {Bottom, Top}}, AutoDelete -> False, 
+     GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+     GridBoxItemSize -> {"Columns" -> {8, 10, 10, 10, 10}}, 
+     GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{1}}}], "Grid"],
+   InterpretationBox[
+    Cell[
+     BoxData[
+      FormBox[
+       StyleBox[
+       "\"Pruned/Unpruned Comparison\"", "Text", StripOnInput -> False], 
+       TextForm]], "InlineText"], 
+    Text[
+     Style["Pruned/Unpruned Comparison", "Text"]]]},
+  "Labeled",
+  DisplayFunction->(GridBox[{{
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, 
+    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+    BaselinePosition -> {2, 1}]& ),
+  InterpretationFunction->(RowBox[{"Labeled", "[", 
+     RowBox[{#, ",", #2, ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], 
+     "]"}]& )]], "Output",
+ CellChangeTimes->{
+  3.7184178263579693`*^9, {3.718417866934868*^9, 3.71841789467904*^9}, 
+   3.718418348439385*^9, 3.7184185870248737`*^9, 3.71841862741809*^9, 
+   3.718418720546049*^9, 
+   3.718419637220793*^9},ExpressionUUID->"0cd6afd3-a365-48eb-b034-\
+43b1687dee01"]
+}, {2}]],
+
+Cell["\<\
+As is evident in the table, pruning usually reduces both the depth and number \
+of nodes for the tree. Though it didn\[CloseCurlyQuote]t increase the \
+accuracy on the cars data set, it did significantly increase the average \
+accuracy on the voting data set. This is likely because of the nature of the \
+two data sets. The voting set is more \[OpenCurlyDoubleQuote]rich\
+\[CloseCurlyDoubleQuote] in the sense that it has more features and possible \
+paths to travel through the tree. The cars data was shallow to begin with \
+(because it has very few features) and pruning didn\[CloseCurlyQuote]t have \
+as much opportunity to improve performance. This difference can also likely \
+be because of the level of noise in each data set. The cars data set could \
+have less noise and so pruning would show less effect.\
+\>", "Text",
+ CellChangeTimes->{{3.718418733426056*^9, 
+  3.7184189944796543`*^9}},ExpressionUUID->"2c534822-fd04-44cd-baa2-\
+445de84a0c57"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Part 6", "Subsection",
+ CellChangeTimes->{{3.714087706228587*^9, 3.7140877073914948`*^9}, {
+  3.714958411848822*^9, 3.714958413911687*^9}, {3.7184124982707987`*^9, 
+  3.718412498347516*^9}},ExpressionUUID->"ce16bb99-ba6a-4324-8764-\
+90f4a5834522"],
+
+Cell["\<\
+For this section I implemented three different ways to handle missing values. \
+Note that in order to work well with pruning, the testing method (as opposed \
+to the training method) for each is implemented the same way. This involves \
+comparing the feature corresponding to a given node with the possible \
+children. If the child exists that matches the feature then recurse on that \
+child. If it doesn\[CloseCurlyQuote]t then recurse on all children and assign \
+a weight to each child\[CloseCurlyQuote]s prediction corresponding to the \
+probability of the child\[CloseCurlyQuote]s appearance in the test set. Sum \
+all probabilities that predicted the same label and then pick the label with \
+the highest prediction.
+
+The first method is described in detail in part 4 of this report. Methods 2 \
+and 3 are described below:
+
+Method 2 involves creating a child node for every possible value of the \
+missing feature in the tree when it is encountered. Under this method, a \
+missing value really counts as every possible value and the probability and \
+information gain is calculated as such. I implemented this method so that the \
+total probability could exceed 1 seen as missing-feature rows will be passed \
+to all branches when the data is split.
+
+Method 3 doesn\[CloseCurlyQuote]t account for missing values in the \
+calculation of information gain. The feature is still passed to each child to \
+deal with, but the next best node to split on is not based off this \
+information.
+
+Below is the table comparing these methods using the voting data set. Each \
+method implements the normal pruning strategy\
+\>", "Text",
+ CellChangeTimes->{{3.718420690117955*^9, 3.718421221733082*^9}, {
+  3.718421297326831*^9, 3.718421330607553*^9}, {3.718421518049429*^9, 
+  3.718421596745152*^9}, {3.718421632174161*^9, 3.718421646996057*^9}, {
+  3.7184217656814528`*^9, 3.718421769263064*^9}, {3.718421979211762*^9, 
+  3.718422000841611*^9}},ExpressionUUID->"4e83a9c9-5ac2-4e6c-af1b-\
+7361ef1ab97b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Labeled", "[", 
+  RowBox[{
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Text", "@", 
+          RowBox[{"Style", "[", 
+           RowBox[{"#", ",", "\"\<TableHeader\>\"", ",", " ", "Bold"}], 
+           "]"}]}], "&"}], "/@", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<Parameter\>\"", ",", "\"\<Method 1\>\"", ",", 
+          "\"\<Method 2\>\"", ",", "\"\<Method 3\>\""}], "}"}]}], ",", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<#Nodes\>\"", ",", "Bold"}], "]"}], ",", 
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<Depth\>\"", ",", "Bold"}], "]"}], ",", 
+            RowBox[{"Style", "[", 
+             RowBox[{"\"\<Accuracy\>\"", ",", "Bold"}], "]"}]}], "}"}], "]"}],
+          ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"20", ",", " ", "6", ",", " ", "0.9624770642201835"}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"77", ",", " ", "17", ",", " ", "0.9857798165137615"}], 
+           "}"}], "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{"124", ",", "17", ",", "0.944954128440367"}], "}"}], 
+          "]"}]}], "\[IndentingNewLine]", "}"}]}], "}"}], ",", 
+     RowBox[{"Alignment", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Center", ",", 
+        RowBox[{"{", 
+         RowBox[{"Bottom", ",", "Top"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"Frame", "\[Rule]", "All"}], ",", 
+     RowBox[{"ItemSize", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{
+        "8", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", 
+         "10"}], "}"}], "}"}]}], ",", 
+     RowBox[{"Spacings", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}]}], "]"}], ",", 
+   RowBox[{"Text", "@", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+     "\"\<Voting Data Missing Strategy Comparison\>\"", ",", "\"\<Text\>\""}],
+      "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.718419034758946*^9, 3.718419079776781*^9}, {
+  3.718419131324609*^9, 3.718419167529158*^9}, {3.718419204340659*^9, 
+  3.7184192346735*^9}, {3.71841940831341*^9, 3.7184194323343363`*^9}, {
+  3.718419495667983*^9, 3.718419498401775*^9}, {3.718419618064645*^9, 
+  3.718419645209968*^9}, {3.718420477842147*^9, 3.718420526317848*^9}, {
+  3.7184205704367723`*^9, 3.7184205762164297`*^9}, {3.718420772163167*^9, 
+  3.718420775836227*^9}},ExpressionUUID->"bf79412c-77ca-42e2-bd5d-\
+85cb917a6eec"],
+
+Cell[BoxData[
+ TemplateBox[{TagBox[
+    GridBox[{{
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Parameter\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Parameter", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Method 1\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Method 1", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Method 2\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Method 2", "TableHeader", Bold]]], 
+       InterpretationBox[
+        Cell[
+         BoxData[
+          FormBox[
+           StyleBox[
+           "\"Method 3\"", "TableHeader", Bold, StripOnInput -> False], 
+           TextForm]], "InlineText"], 
+        Text[
+         Style["Method 3", "TableHeader", Bold]]]}, {
+       TagBox[
+        GridBox[{{
+           StyleBox["\"#Nodes\"", Bold, StripOnInput -> False]}, {
+           StyleBox["\"Depth\"", Bold, StripOnInput -> False]}, {
+           StyleBox["\"Accuracy\"", Bold, StripOnInput -> False]}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"20"}, {"6"}, {"0.9624770642201835`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"77"}, {"17"}, {"0.9857798165137615`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"], 
+       TagBox[
+        GridBox[{{"124"}, {"17"}, {"0.944954128440367`"}}, 
+         GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+         "Column", 
+         GridBoxItemSize -> {
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"]}}, 
+     GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {Bottom, Top}}, 
+     AutoDelete -> False, 
+     GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+     GridBoxItemSize -> {"Columns" -> {8, 10, 10, 10, 10, 10, 10}}, 
+     GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{1}}}], "Grid"],
+   InterpretationBox[
+    Cell[
+     BoxData[
+      FormBox[
+       StyleBox[
+       "\"Voting Data Missing Strategy Comparison\"", "Text", StripOnInput -> 
+        False], TextForm]], "InlineText"], 
+    Text[
+     Style["Voting Data Missing Strategy Comparison", "Text"]]]},
+  "Labeled",
+  DisplayFunction->(GridBox[{{
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}, {
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, 
+    GridBoxItemSize -> {"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+    BaselinePosition -> {2, 1}]& ),
+  InterpretationFunction->(RowBox[{"Labeled", "[", 
+     RowBox[{#, ",", #2, ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           RowBox[{"Top", ",", "Center"}], "}"}], "}"}]}], 
+     "]"}]& )]], "Output",
+ CellChangeTimes->{{3.7184190636207237`*^9, 3.718419081400214*^9}, 
+   3.718419646016024*^9, {3.7184205740589046`*^9, 3.718420576580624*^9}, 
+   3.718421599360808*^9},ExpressionUUID->"4eebf82c-0674-4d9d-9d2b-\
+38c86d8bb944"]
+}, {2}]],
+
+Cell["\<\
+As expected, the regular method creates the simplest tree. It also results in \
+a very good average. The second method also creates a good tree. With the \
+second method the un-pruned tree is actually very large but the pruning \
+algorithm allows for unneeded branches to be cut off drastically. The goal \
+was to over-define the tree so that pruning would cut it back to a reasonable \
+level but with the best accuracy possible. As expected, the broad definition \
+of this algorithm also gives it a higher accuracy, but this is at the cost of \
+node depth. the final method is all-around poor. It is the largest tree and \
+also the least accurate. It would appear as if over-defining the tree in this \
+method did not allow the pruning algorithm to increase the accuracy very much \
+at all. The third method was essentially a compromise between the first two \
+and so essentially got both the bad behaviors of them as well.\
+\>", "Text",
+ CellChangeTimes->{{3.718421607819159*^9, 3.718421884817587*^9}, {
+  3.718422034842676*^9, 
+  3.718422088642653*^9}},ExpressionUUID->"3306c557-7f14-4a95-adf5-\
+809c2603ecb3"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1916, 1041},
+WindowMargins->{{2, Automatic}, {Automatic, 18}},
+FrontEndVersion->"11.1 for Linux x86 (64-bit) (April 18, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 148, 3, 93, "Title", "ExpressionUUID" -> \
+"0ea8ceef-b625-4561-960e-805e2d7abe95"],
+Cell[CellGroupData[{
+Cell[753, 29, 169, 3, 66, "Chapter", "ExpressionUUID" -> \
+"4d9b8035-c822-4366-b5a6-2c9dd65a821f"],
+Cell[CellGroupData[{
+Cell[947, 36, 214, 4, 65, "Section", "ExpressionUUID" -> \
+"7c61c781-d601-429a-bdfb-99031f0745b5"],
+Cell[CellGroupData[{
+Cell[1186, 44, 205, 4, 44, "Subsection", "ExpressionUUID" -> \
+"256f3755-1555-48fe-82b8-384777f3bcb6"],
+Cell[1394, 50, 839, 14, 55, "Text", "ExpressionUUID" -> \
+"77bea2d1-4ffd-4091-ae0b-63db8c6fe059"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2270, 69, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
+"7eff26a4-a034-488a-9adf-84761db94a67"],
+Cell[2524, 75, 309, 7, 33, "Text", "ExpressionUUID" -> \
+"59b3b843-182a-4015-9c3c-7186f9a1d5a3"],
+Cell[CellGroupData[{
+Cell[2858, 86, 4477, 110, 218, "Input", "ExpressionUUID" -> \
+"cfc703a7-1d9d-402f-9b84-e3a4e6eeea5d"],
+Cell[7338, 198, 5059, 116, 282, "Output", "ExpressionUUID" -> \
+"4012e00b-413b-420d-b352-820a2b1690fb"]
+}, {2}]],
+Cell[12409, 317, 694, 12, 55, "Text", "ExpressionUUID" -> \
+"7a3a2678-dddc-4885-8438-0b7246ab248f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13140, 334, 252, 4, 44, "Subsection", "ExpressionUUID" -> \
+"e94a9be2-d7b7-4ab7-a490-33b127e7b8a6"],
+Cell[CellGroupData[{
+Cell[13417, 342, 208, 4, 35, "Subsubsection", "ExpressionUUID" -> \
+"3a6cb89d-2072-4f7b-80cc-ae8f0253de5e"],
+Cell[13628, 348, 1370, 20, 77, "Text", "ExpressionUUID" -> \
+"f22d886b-bdf3-490a-9f01-987ce5236744"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15035, 373, 161, 3, 35, "Subsubsection", "ExpressionUUID" -> \
+"16e4c776-173a-4ccc-866f-c752adb88919"],
+Cell[15199, 378, 1463, 23, 99, "Text", "ExpressionUUID" -> \
+"feb7a2f9-2369-4907-bc3a-98101f0c934c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16711, 407, 251, 4, 44, "Subsection", "ExpressionUUID" -> \
+"9851359c-96a2-4e1c-9b40-469217bd2477"],
+Cell[16965, 413, 1775, 27, 187, "Text", "ExpressionUUID" -> \
+"5bdf0979-0cc8-4bec-ad41-50cc69532735"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18777, 445, 247, 3, 44, "Subsection", "ExpressionUUID" -> \
+"7fd6677d-535e-4554-b553-2e85d46af5bb"],
+Cell[19027, 450, 348, 7, 33, "Text", "ExpressionUUID" -> \
+"28301a0a-0d20-4add-8456-a80bcbedc69e"],
+Cell[CellGroupData[{
+Cell[19400, 461, 3099, 74, 172, "Input", "ExpressionUUID" -> \
+"b74a63a8-0cf3-49ac-b140-3c4029ff8751"],
+Cell[22502, 537, 4619, 119, 138, "Output", "ExpressionUUID" -> \
+"0cd6afd3-a365-48eb-b034-43b1687dee01"]
+}, {2}]],
+Cell[27133, 659, 967, 15, 77, "Text", "ExpressionUUID" -> \
+"2c534822-fd04-44cd-baa2-445de84a0c57"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28137, 679, 253, 4, 44, "Subsection", "ExpressionUUID" -> \
+"ce16bb99-ba6a-4324-8764-90f4a5834522"],
+Cell[28393, 685, 2005, 35, 275, "Text", "ExpressionUUID" -> \
+"4e83a9c9-5ac2-4e6c-af1b-7361ef1ab97b"],
+Cell[CellGroupData[{
+Cell[30423, 724, 2888, 71, 172, "Input", "ExpressionUUID" -> \
+"bf79412c-77ca-42e2-bd5d-85cb917a6eec"],
+Cell[33314, 797, 4004, 102, 138, "Output", "ExpressionUUID" -> \
+"4eebf82c-0674-4d9d-9d2b-38c86d8bb944"]
+}, {2}]],
+Cell[37330, 902, 1123, 17, 99, "Text", "ExpressionUUID" -> \
+"3306c557-7f14-4a95-adf5-809c2603ecb3"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

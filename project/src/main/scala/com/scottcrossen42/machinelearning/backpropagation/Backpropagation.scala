@@ -5,6 +5,7 @@ import edu.byu.cs478.toolkit.Matrix
 import java.util.Random
 import com.scottcrossen42.machinelearning.utility.RandomWeightGenerator
 import com.scottcrossen42.machinelearning.utility.WeightOperations
+import com.scottcrossen42.machinelearning.utility.MatrixOperations
 import scala.collection.JavaConverters._
 import edu.byu.cs478.toolkit.BaselineLearner
 
@@ -19,8 +20,8 @@ class Backpropagation(rand: Random) extends SupervisedLearner {
   def train(features: Matrix, labels: Matrix) = {
     if (verbose) println("Starting to train on data")
     // Train the model for each label
-    val (trainingFeatures: Matrix, validationFeatures: Matrix) = partitionMatrix(features, 1 - validationAmnt)
-    val (trainingLabels: Matrix, validationLabels: Matrix) = partitionMatrix(labels, 1 - validationAmnt)
+    val (trainingFeatures: Matrix, validationFeatures: Matrix) = MatrixOperations.partitionMatrix(features, 1 - validationAmnt)
+    val (trainingLabels: Matrix, validationLabels: Matrix) = MatrixOperations.partitionMatrix(labels, 1 - validationAmnt)
     currentNeuralNets = (0 to labels.cols - 1).map{ (iter: Int) =>
       val neuralNet: NeuralNet = getNeuralNet(features.cols, labels.valueCount(iter), iter)
       if (verbose) println("\nNeural Net initialized")
@@ -155,13 +156,6 @@ object Backpropagation {
     val outputLayerErrors: List[Double] = neuralNet.getOutputLayerErrors(expected, outputLayerOutputs)
     val newNeuralNet: NeuralNet = neuralNet.updateAllLayerWeights(row, hiddenLayerOutputs, outputLayerErrors, learningRate, momentum)
     newNeuralNet
-  }
-
-  private def partitionMatrix(matrix: Matrix, split: Double): Tuple2[Matrix, Matrix] = {
-    val takeAmnt: Int = Math.floor(matrix.rows * split).toInt
-    val matrix1: Matrix = new Matrix(matrix, 0, 0, takeAmnt, matrix.cols)
-    val matrix2: Matrix = new Matrix(matrix, takeAmnt - 1, 0, matrix.rows - takeAmnt, matrix.cols)
-    (matrix1, matrix2)
   }
 
 }

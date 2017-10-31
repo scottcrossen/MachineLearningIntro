@@ -25,7 +25,7 @@ public class Matrix {
 	ArrayList< TreeMap<String, Integer> > m_str_to_enum;
 	ArrayList< TreeMap<Integer, String> > m_enum_to_str;
 
-	static double MISSING = Double.MAX_VALUE; // representation of missing values in the dataset
+	public static double MISSING = Double.MAX_VALUE; // representation of missing values in the dataset
 
 	// Creates a 0x0 matrix. You should call loadARFF or setSize next.
 	public Matrix() {}
