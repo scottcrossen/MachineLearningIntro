@@ -33,9 +33,9 @@ public class Main {
         String[] managerArgs9 = {"-L", "decisiontree", "-A", dataDir + "lenses.arff", "-E", "random", ".75"};
         //manager.main(managerArgs9);
         String[] managerArgs10 = {"-L", "decisiontree", "-A", dataDir + "cars.arff", "-E", "cross", "10"};
-        manager.main(managerArgs10);
+        //manager.main(managerArgs10);
         String[] managerArgs11 = {"-L", "decisiontree", "-A", dataDir + "voting_full.arff", "-E", "cross", "10"};
-        manager.main(managerArgs11);
+        //manager.main(managerArgs11);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;

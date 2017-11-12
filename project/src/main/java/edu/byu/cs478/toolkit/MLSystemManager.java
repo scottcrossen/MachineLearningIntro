@@ -11,6 +11,7 @@ import java.io.File;
 import com.scottcrossen42.machinelearning.perceptron.Perceptron;
 import com.scottcrossen42.machinelearning.backpropagation.Backpropagation;
 import com.scottcrossen42.machinelearning.decisiontree.DecisionTree;
+import com.scottcrossen42.machinelearning.nearestneighbor.InstanceBasedLearner;
 
 
 public class MLSystemManager {
@@ -24,7 +25,7 @@ public class MLSystemManager {
 		else if (model.equals("perceptron")) return new Perceptron(rand);
 		else if (model.equals("Backpropagation")) return new Backpropagation(rand);
 		else if (model.equals("decisiontree")) return new DecisionTree();
-		// else if (model.equals("knn")) return new InstanceBasedLearner();
+		else if (model.equals("knn")) return new InstanceBasedLearner();
 		else throw new Exception("Unrecognized model: " + model);
 	}
 
