@@ -17,12 +17,19 @@ class InstanceBasedLearner extends SupervisedLearner {
   def predict(newFeature: Array[Double]): Array[Double] = {
     return predictWithMatrices(trainingFeatures, trainingLabels, newFeature.toList).toArray
   }
+
+  // For integration with java.
+  def setNumberOfNeighbors(k: Int) = {
+    numberOfNeighbors = k
+  }
+
+  // Note: expansion project was done in a separate script to pre-process the data. I'm working on integratng it into the training method.
 }
 
 object InstanceBasedLearner {
   val useDistanceWeighting: Boolean = false
 
-  val numberOfNeighbors: Int = 3
+  var numberOfNeighbors: Int = 3
 
   def categoricalDistance(features: List[Double], labels: List[Double], firstValue: Double, secondValue: Double): Double = {
     val firstOccurrances: List[Tuple2[Double, Double]] = labels.zip(features).filter{
@@ -48,7 +55,7 @@ object InstanceBasedLearner {
     (0 to labels.cols - 1).map { labelColumn: Int =>
       val currentLabelColumn: List[Double] = labels.col(labelColumn).toList
       val closestNeighbors: List[(Double, Double)] = (0 to features.rows - 1).map { currentRow: Int =>
-        ((0 to newFeature.size - 1).map { featureColumn: Int =>
+        val result: Tuple2[Double, Double] = ((0 to newFeature.size - 1).map { featureColumn: Int =>
           val currentLabelColumn: List[Double] = features.col(featureColumn).toList
           val firstValue: Double = features.get(currentRow, featureColumn)
           val secondValue: Double = newFeature(featureColumn)
@@ -60,20 +67,21 @@ object InstanceBasedLearner {
             categoricalDistance(currentLabelColumn, currentLabelColumn, firstValue, secondValue);
           }
         }.sum, labels.get(currentRow, labelColumn))
+        result
       }.toList.sortBy(_._1).take(numberOfNeighbors)
       if (labels.valueCount(labelColumn) == 0 && !useDistanceWeighting) {
-        val votedLabels: List[Double] = closestNeighbors.map(_._1)
+        val votedLabels: List[Double] = closestNeighbors.map(_._2)
         votedLabels.sum / votedLabels.size.toDouble
       } else if (labels.valueCount(labelColumn) == 0) {
-        val (numerator: Double, denominator: Double) = closestNeighbors.foldLeft((0.0,0.0)) { case ((numeratorSum: Double, denominatorSum: Double), (label: Double, distance: Double)) =>
+        val (numerator: Double, denominator: Double) = closestNeighbors.foldLeft((0.0,0.0)) { case ((numeratorSum: Double, denominatorSum: Double), (distance: Double, label: Double)) =>
           (numeratorSum + label / Math.pow(distance, 2), denominatorSum + 1 / Math.pow(distance, 2))
         }
         numerator / denominator
       } else if (!useDistanceWeighting) {
-        closestNeighbors.groupBy(_._1).toList.sortWith(_._2.size > _._2.size).headOption.map(_._1).getOrElse(Matrix.MISSING)
+        closestNeighbors.groupBy(_._2).toList.sortWith(_._2.size > _._2.size).headOption.map(_._1).getOrElse(Matrix.MISSING)
       } else {
-        val labelWeights: List[(Double, Double)] = closestNeighbors.groupBy(_._1).toList.map{ case (label: Double, originals: List[(Double, Double)]) =>
-          val weight: Double = originals.map { case (_, distance: Double) =>
+        val labelWeights: List[(Double, Double)] = closestNeighbors.groupBy(_._2).toList.map{ case (label: Double, originals: List[(Double, Double)]) =>
+          val weight: Double = originals.map { case (distance: Double, _) =>
             1 / Math.pow(distance, 2)
           }.sum
           (label, weight)

@@ -36,6 +36,14 @@ public class Main {
         //manager.main(managerArgs10);
         String[] managerArgs11 = {"-L", "decisiontree", "-A", dataDir + "voting_full.arff", "-E", "cross", "10"};
         //manager.main(managerArgs11);
+        String[] managerArgs12 = {"-L", "knn", "-A", dataDir + "mt_train.arff", "-E", "static", dataDir + "mt_test.arff",};
+        //manager.main(managerArgs12);
+        String[] managerArgs13 = {"-L", "knn", "-A", dataDir + "housing_train.arff", "-E", "static", dataDir + "housing_test.arff",};
+        //manager.main(managerArgs13);
+        String[] managerArgs14 = {"-L", "knn", "-A", dataDir + "credit_a.arff", "-E", "random", ".90",};
+        //manager.main(managerArgs14);
+        String[] managerArgs15 = {"-L", "knn", "-A", dataDir + "mt_train_small.arff", "-E", "static", dataDir + "mt_test_small.arff",};
+        //manager.main(managerArgs15);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;
