@@ -20,7 +20,7 @@ while true; do
 	  kill $PID1
 		PID1=-1
 	fi
-	java -jar ${JAR_NAME} &
+	java -jar ${JAR_NAME} -XX:MaxRAMFraction=1 &
   PID1=$!
   inotifywait -e modify -e delete -e create -e attrib ${JAR_NAME}
 done &

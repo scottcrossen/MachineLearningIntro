@@ -25,7 +25,7 @@ public class Main {
         String[] managerArgs5 = {"-L", "perceptron", "-A", dataDir + "voting.arff", "-E", "random", ".7"};
         //manager.main(managerArgs5);
         String[] managerArgs6 = {"-L", "perceptron", "-A", dataDir + "iris.arff", "-E", "random", ".7"};
-        //manager.main(managerArgs6);
+        //manager.main(managerArgs6);S
         String[] managerArgs7 = {"-L", "Backpropagation", "-A", dataDir + "iris.arff", "-E", "random", ".75"};
         //manager.main(managerArgs7);
         String[] managerArgs8 = {"-L", "Backpropagation", "-A", dataDir + "vowel.arff", "-E", "random", ".75"};
@@ -38,12 +38,14 @@ public class Main {
         //manager.main(managerArgs11);
         String[] managerArgs12 = {"-L", "knn", "-A", dataDir + "mt_train.arff", "-E", "static", dataDir + "mt_test.arff",};
         //manager.main(managerArgs12);
-        String[] managerArgs13 = {"-L", "knn", "-A", dataDir + "housing_train.arff", "-E", "static", dataDir + "housing_test.arff",};
+        String[] managerArgs13 = {"-L", "knn", "-A", dataDir + "mt_train_small.arff", "-E", "static", dataDir + "mt_test_small.arff",};
         //manager.main(managerArgs13);
-        String[] managerArgs14 = {"-L", "knn", "-A", dataDir + "credit_a.arff", "-E", "random", ".90",};
+        String[] managerArgs14 = {"-L", "knn", "-N", "-A", dataDir + "mt_train_small.arff", "-E", "static", dataDir + "mt_test_small.arff",};
         //manager.main(managerArgs14);
-        String[] managerArgs15 = {"-L", "knn", "-A", dataDir + "mt_train_small.arff", "-E", "static", dataDir + "mt_test_small.arff",};
+        String[] managerArgs15 = {"-L", "knn", "-N", "-A", dataDir + "housing_train.arff", "-E", "static", dataDir + "housing_test.arff",};
         //manager.main(managerArgs15);
+        String[] managerArgs16 = {"-L", "knn", "-N", "-A", dataDir + "credit_a.arff", "-E", "random", ".90"};
+        //manager.main(managerArgs16);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;

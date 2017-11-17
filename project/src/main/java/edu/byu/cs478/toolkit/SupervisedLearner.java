@@ -41,6 +41,7 @@ public abstract class SupervisedLearner {
 			double sse = 0.0;
 
       double[] results = this.predictOnAllValues(features);
+      System.out.println("Finished predicting on values");
       for(int i = 0; i < results.length; i++) {
         double[] targ = labels.row(i);
         double delta = targ[0] - results[i];
@@ -59,6 +60,7 @@ public abstract class SupervisedLearner {
 			}
 			int correctCount = 0;
       double[] results = this.predictOnAllValues(features);
+      System.out.println("Finished predicting on values");
 			for(int i = 0; i < results.length; i++)
 			{
 				int targ = (int)labels.get(i, 0);

@@ -5,6 +5,7 @@ import edu.byu.cs478.toolkit.Matrix
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import java.util.concurrent.Executor
+import com.scottcrossen42.machinelearning.utility.TopN;
 
 class InstanceBasedLearner extends SupervisedLearner {
   import InstanceBasedLearner._
@@ -70,8 +71,9 @@ class InstanceBasedLearner extends SupervisedLearner {
     val newFeaturesImmutable: List[List[Double]] = (0 to newFeatures.rows - 1).map{ currentRow: Int =>
       newFeatures.row(currentRow).toList
     }.toList
+    //println(s"Testing on ${newFeaturesImmutable.size} features")
     return Await.result(Future.sequence(newFeaturesImmutable.zipWithIndex.map { case (feature: List[Double], index: Int) =>
-      //if (index % 100 == 0) println(s"Testing feature #${index}")
+      //if ((index + 1) % 100 == 0) println(s"Testing feature #${index + 1}")
       predictWithMatrices(
         featuresImmutable,
         labelsImmutable,
@@ -146,7 +148,8 @@ object InstanceBasedLearner {
           result
         }
       }.toList).map { allNeighbors: List[(Double, Double)] =>
-        val closestNeighbors: List[(Double, Double)] = allNeighbors.sortBy(_._1).take(numberOfNeighbors)
+        //val closestNeighbors: List[(Double, Double)] = allNeighbors.sortWith(_._1 < _._1).take(numberOfNeighbors)
+        val closestNeighbors: List[(Double, Double)] = pickTopWeights(numberOfNeighbors, allNeighbors)
         if (labelValueCount(labelColumn) == 0 && !useDistanceWeighting) {
           val votedLabels: List[Double] = closestNeighbors.map(_._2)
           votedLabels.sum / votedLabels.size.toDouble
@@ -172,4 +175,10 @@ object InstanceBasedLearner {
       }
     }.toList)
   }
+
+  def pickTopWeights (n: Int, li: List [Tuple2[Double,Double]])
+    (implicit ord: Ordering[Tuple2[Double,Double]]): List[Tuple2[Double,Double]] = {
+    TopN.extremeN (n, li) ((param1: Tuple2[Double,Double], param2: Tuple2[Double,Double]) => param1._1 < param2._1, (param1: Tuple2[Double,Double], param2: Tuple2[Double,Double]) => param1._1 > param2._1)
+  }.toList
+
 }
