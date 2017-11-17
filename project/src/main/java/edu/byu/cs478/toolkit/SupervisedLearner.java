@@ -7,6 +7,7 @@ package edu.byu.cs478.toolkit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+import java.util.List;
 
 public abstract class SupervisedLearner {
 
@@ -38,13 +39,13 @@ public abstract class SupervisedLearner {
 			// The label is continuous, so measure root mean squared error
 			double[] pred = new double[1];
 			double sse = 0.0;
-			for(int i = 0; i < features.rows(); i++)
-			{
-				double[] feat = features.row(i);
-				double[] targ = labels.row(i);
-				double delta = targ[0] - predict(feat)[0];
-				sse += (delta * delta);
-			}
+
+      double[] results = this.predictOnAllValues(features);
+      for(int i = 0; i < results.length; i++) {
+        double[] targ = labels.row(i);
+        double delta = targ[0] - results[i];
+        sse += (delta * delta);
+      }
 			return Math.sqrt(sse / features.rows());
 		}
 		else
@@ -57,13 +58,13 @@ public abstract class SupervisedLearner {
 					confusion.setAttrName(i, labels.attrValue(0, i));
 			}
 			int correctCount = 0;
-			for(int i = 0; i < features.rows(); i++)
+      double[] results = this.predictOnAllValues(features);
+			for(int i = 0; i < results.length; i++)
 			{
-				double[] feat = features.row(i);
 				int targ = (int)labels.get(i, 0);
 				if(targ >= labelValues)
 					throw new Exception("The label is out of range");
-				int pred = (int)predict(feat)[0];
+				int pred = (int)results[i];
 				if(confusion != null)
 					confusion.set(targ, pred, confusion.get(targ, pred) + 1);
 				if(pred == targ)
@@ -72,5 +73,15 @@ public abstract class SupervisedLearner {
 			return (double)correctCount / features.rows();
 		}
 	}
+
+  protected double[] predictOnAllValues(Matrix features) throws Exception {
+    double[] output = new double[features.rows()];
+    for(int i = 0; i < features.rows(); i++)
+    {
+      double[] feat = features.row(i);
+      output[i] = predict(feat)[0];
+    }
+    return output;
+  }
 
 }
