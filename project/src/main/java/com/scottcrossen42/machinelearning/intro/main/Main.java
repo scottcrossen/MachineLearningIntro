@@ -46,6 +46,8 @@ public class Main {
         //manager.main(managerArgs15);
         String[] managerArgs16 = {"-L", "knn", "-N", "-A", dataDir + "credit_a.arff", "-E", "random", ".90"};
         //manager.main(managerArgs16);
+        String[] managerArgs17 = {"-L", "kmeans", "-A", dataDir + "laborWithID.arff", "-E", "unsupervised"};
+        manager.main(managerArgs17);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;

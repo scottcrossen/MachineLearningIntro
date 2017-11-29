@@ -12,6 +12,7 @@ import com.scottcrossen42.machinelearning.perceptron.Perceptron;
 import com.scottcrossen42.machinelearning.backpropagation.Backpropagation;
 import com.scottcrossen42.machinelearning.decisiontree.DecisionTree;
 import com.scottcrossen42.machinelearning.nearestneighbor.InstanceBasedLearner;
+import com.scottcrossen42.machinelearning.clustering.KMeans;
 
 
 public class MLSystemManager {
@@ -19,13 +20,14 @@ public class MLSystemManager {
 	/**
 	 *  When you make a new learning algorithm, you should add a line for it to this method.
 	 */
-	public SupervisedLearner getLearner(String model, Random rand) throws Exception
+	public Learner getLearner(String model, Random rand) throws Exception
 	{
 		if (model.equals("baseline")) return new BaselineLearner();
 		else if (model.equals("perceptron")) return new Perceptron(rand);
 		else if (model.equals("Backpropagation")) return new Backpropagation(rand);
 		else if (model.equals("decisiontree")) return new DecisionTree();
 		else if (model.equals("knn")) return new InstanceBasedLearner();
+		else if (model.equals("kmeans")) return new KMeans(rand);
 		else throw new Exception("Unrecognized model: " + model);
 	}
 
@@ -46,7 +48,7 @@ public class MLSystemManager {
 		boolean normalize = parser.getNormalize();
 
 		// Load the model
-		SupervisedLearner learner = getLearner(learnerName, rand);
+		Learner learner = getLearner(learnerName, rand);
 
 		// Load the ARFF file
 		Matrix data = new Matrix();
@@ -68,15 +70,21 @@ public class MLSystemManager {
 
 		if (evalMethod.equals("training"))
 		{
+      SupervisedLearner supervisedLearner;
+      try {
+        supervisedLearner = (SupervisedLearner) learner;
+      } catch (Exception e) {
+        throw new Exception("Could not use this evaluation method on the specified learner");
+      }
 			System.out.println("Calculating accuracy on training set...");
 			Matrix features = new Matrix(data, 0, 0, data.rows(), data.cols() - 1);
 			Matrix labels = new Matrix(data, 0, data.cols() - 1, data.rows(), 1);
 			Matrix confusion = new Matrix();
 			double startTime = System.currentTimeMillis();
-			learner.train(features, labels);
+			supervisedLearner.train(features, labels);
 			double elapsedTime = System.currentTimeMillis() - startTime;
 			System.out.println("Time to train (in seconds): " + elapsedTime / 1000.0);
-			double accuracy = learner.measureAccuracy(features, labels, confusion);
+			double accuracy = supervisedLearner.measureAccuracy(features, labels, confusion);
 			System.out.println("Training set accuracy: " + accuracy);
 			if(printConfusionMatrix) {
 				System.out.println("\nConfusion matrix: (Row=target value, Col=predicted value)");
@@ -86,6 +94,12 @@ public class MLSystemManager {
 		}
 		else if (evalMethod.equals("static"))
 		{
+      SupervisedLearner supervisedLearner;
+      try {
+        supervisedLearner = (SupervisedLearner) learner;
+      } catch (Exception e) {
+        throw new Exception("Could not use this evaluation method on the specified learner");
+      }
 			Matrix testData = new Matrix();
 			testData.loadArff(evalParameter);
 			if (normalize)
@@ -97,15 +111,15 @@ public class MLSystemManager {
 			Matrix features = new Matrix(data, 0, 0, data.rows(), data.cols() - 1);
 			Matrix labels = new Matrix(data, 0, data.cols() - 1, data.rows(), 1);
 			double startTime = System.currentTimeMillis();
-			learner.train(features, labels);
+			supervisedLearner.train(features, labels);
 			double elapsedTime = System.currentTimeMillis() - startTime;
 			System.out.println("Time to train (in seconds): " + elapsedTime / 1000.0);
-			double trainAccuracy = learner.measureAccuracy(features, labels, null);
+			double trainAccuracy = supervisedLearner.measureAccuracy(features, labels, null);
 			System.out.println("Training set accuracy: " + trainAccuracy);
 			Matrix testFeatures = new Matrix(testData, 0, 0, testData.rows(), testData.cols() - 1);
 			Matrix testLabels = new Matrix(testData, 0, testData.cols() - 1, testData.rows(), 1);
 			Matrix confusion = new Matrix();
-			double testAccuracy = learner.measureAccuracy(testFeatures, testLabels, confusion);
+			double testAccuracy = supervisedLearner.measureAccuracy(testFeatures, testLabels, confusion);
 			System.out.println("Test set accuracy: " + testAccuracy);
 			if(printConfusionMatrix) {
 				System.out.println("\nConfusion matrix: (Row=target value, Col=predicted value)");
@@ -115,6 +129,12 @@ public class MLSystemManager {
 		}
 		else if (evalMethod.equals("random"))
 		{
+      SupervisedLearner supervisedLearner;
+      try {
+        supervisedLearner = (SupervisedLearner) learner;
+      } catch (Exception e) {
+        throw new Exception("Could not use this evaluation method on the specified learner");
+      }
 			System.out.println("Calculating accuracy on a random hold-out set...");
 			double trainPercent = Double.parseDouble(evalParameter);
 			if (trainPercent < 0 || trainPercent > 1)
@@ -128,13 +148,13 @@ public class MLSystemManager {
 			Matrix testFeatures = new Matrix(data, trainSize, 0, data.rows() - trainSize, data.cols() - 1);
 			Matrix testLabels = new Matrix(data, trainSize, data.cols() - 1, data.rows() - trainSize, 1);
 			double startTime = System.currentTimeMillis();
-			learner.train(trainFeatures, trainLabels);
+			supervisedLearner.train(trainFeatures, trainLabels);
 			double elapsedTime = System.currentTimeMillis() - startTime;
 			System.out.println("Time to train (in seconds): " + elapsedTime / 1000.0);
-			double trainAccuracy = learner.measureAccuracy(trainFeatures, trainLabels, null);
+			double trainAccuracy = supervisedLearner.measureAccuracy(trainFeatures, trainLabels, null);
 			System.out.println("Training set accuracy: " + trainAccuracy);
 			Matrix confusion = new Matrix();
-			double testAccuracy = learner.measureAccuracy(testFeatures, testLabels, confusion);
+			double testAccuracy = supervisedLearner.measureAccuracy(testFeatures, testLabels, confusion);
 			System.out.println("Test set accuracy: " + testAccuracy);
 			if(printConfusionMatrix) {
 				System.out.println("\nConfusion matrix: (Row=target value, Col=predicted value)");
@@ -144,6 +164,12 @@ public class MLSystemManager {
 		}
 		else if (evalMethod.equals("cross"))
 		{
+      SupervisedLearner supervisedLearner;
+      try {
+        supervisedLearner = (SupervisedLearner) learner;
+      } catch (Exception e) {
+        throw new Exception("Could not use this evaluation method on the specified learner");
+      }
 			System.out.println("Calculating accuracy using cross-validation...");
 			int folds = Integer.parseInt(evalParameter);
 			if (folds <= 0)
@@ -164,9 +190,9 @@ public class MLSystemManager {
 					trainFeatures.add(data, end, 0, data.rows() - end);
 					trainLabels.add(data, end, data.cols() - 1, data.rows() - end);
 					double startTime = System.currentTimeMillis();
-					learner.train(trainFeatures, trainLabels);
+					supervisedLearner.train(trainFeatures, trainLabels);
 					elapsedTime += System.currentTimeMillis() - startTime;
-					double accuracy = learner.measureAccuracy(testFeatures, testLabels, null);
+					double accuracy = supervisedLearner.measureAccuracy(testFeatures, testLabels, null);
 					sumAccuracy += accuracy;
 					System.out.println("Rep=" + j + ", Fold=" + i + ", Accuracy=" + accuracy);
 				}
@@ -174,7 +200,19 @@ public class MLSystemManager {
 			elapsedTime /= (reps * folds);
 			System.out.println("Average time to train (in seconds): " + elapsedTime / 1000.0);
 			System.out.println("Mean accuracy=" + (sumAccuracy / (reps * folds)));
-		}
+		} else {
+      UnsupervisedLearner unsupervisedLearner;
+      try {
+        unsupervisedLearner = (UnsupervisedLearner) learner;
+      } catch (Exception e) {
+        throw new Exception("Could not use this evaluation method on the specified learner");
+      }
+      System.out.println("Running data on unspervised algorithm...");
+			double startTime = System.currentTimeMillis();
+			unsupervisedLearner.apply(data);
+			double elapsedTime = System.currentTimeMillis() - startTime;
+			System.out.println("Time to run (in seconds): " + elapsedTime / 1000.0);
+    }
 	}
 
 	/**
@@ -229,8 +267,8 @@ public class MLSystemManager {
 							{
 								//expecting the number of folds
 								evalExtra = argv[++i];
-							}
-							else if (!argv[i].equals("training"))
+              }
+              else if (!argv[i].equals("training") && !argv[i].equals("unsupervised"))
 							{
 								System.out.println("Invalid Evaluation Method: " + argv[i]);
 								System.exit(0);

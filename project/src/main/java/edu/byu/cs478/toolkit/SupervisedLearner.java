@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.List;
 
-public abstract class SupervisedLearner {
+public abstract class SupervisedLearner implements Learner {
 
 	// Before you call this method, you need to divide your data
 	// into a feature matrix and a label matrix.
