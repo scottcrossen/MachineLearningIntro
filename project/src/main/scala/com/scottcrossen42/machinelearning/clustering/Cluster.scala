@@ -39,10 +39,11 @@ case class Cluster (
     names.mkString(", ")
   }
 
-  //def calcSSE: Double = rows.map(calcDistance(centroid, _, columnContinuities, false)).sum
   def calcSSE: Double = rows.map(calcDistanceFromCentroid(_)).sum
 
   def isEmpty: Boolean = rows.size == 0
+
+  def amountAssigned: Int = rows.size
 }
 
 object Cluster {
@@ -64,16 +65,20 @@ object Cluster {
     }.sum
   }
   def calcNewCentroid(rows: List[List[Double]], columnContinuities: List[Int]): List[Double] = {
-    rows.transpose.zip(columnContinuities).map { case (column: List[Double], continuity: Int) =>
+    (rows.transpose, columnContinuities, (0 to columnContinuities.size - 1).toList).zipped.map { case (column: List[Double], continuity: Int, colNum: Int) =>
       val filteredColumn: List[Double] = column.filter(_ != Matrix.MISSING)
-      if (continuity == 0) {
-        if (filteredColumn.size != 0 && filteredColumn.sum != 0) {
-          filteredColumn.sum / filteredColumn.size * 1.0
-        } else {
-          Matrix.MISSING
-        }
+      if (filteredColumn.size == 0) {
+        Matrix.MISSING
+      } else if (continuity == 0) {
+        filteredColumn.sum / filteredColumn.size * 1.0
       } else {
-        filteredColumn.groupBy(identity).maxBy(_._2.size)._1
+        /*if (filteredColumn.size % 2 == 0) {
+          val sorted: List[Double] = filteredColumn.sortWith(_ < _)
+          (sorted(filteredColumn.size/2) + sorted(filteredColumn.size/2-1)) / 2
+        } else {
+          filteredColumn.sortWith(_ < _)(filteredColumn.size/2)
+        }*/
+        filteredColumn.groupBy(identity).toList.sortBy(_._1).maxBy(_._2.size)._1
       }
     }
   }
@@ -83,6 +88,6 @@ object Cluster {
         calcDistance(firstRow, secondRow, columnContinuities)
       }
     }.flatten
-    distances.sum / distances.size * 1.0
+    distances.sum / (distances.size * 1.0)
   }
 }

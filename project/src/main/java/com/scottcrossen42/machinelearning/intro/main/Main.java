@@ -47,7 +47,15 @@ public class Main {
         String[] managerArgs16 = {"-L", "knn", "-N", "-A", dataDir + "credit_a.arff", "-E", "random", ".90"};
         //manager.main(managerArgs16);
         String[] managerArgs17 = {"-L", "kmeans", "-A", dataDir + "laborWithID.arff", "-E", "unsupervised"};
-        manager.main(managerArgs17);
+        //manager.main(managerArgs17);
+        String[] managerArgs18 = {"-L", "kmeans", "-N", "-A", dataDir + "laborWithID.arff", "-E", "unsupervised"};
+        //manager.main(managerArgs18);
+        String[] managerArgs19 = {"-L", "kmeans", "-A", dataDir + "sponge.arff", "-E", "unsupervised"};
+        //manager.main(managerArgs19);
+        String[] managerArgs20 = {"-L", "kmeans", "-A", dataDir + "iris_full.arff", "-E", "unsupervised"};
+        //manager.main(managerArgs20);
+        String[] managerArgs21 = {"-L", "kmeans", "-N", "-A", dataDir + "abalone500.arff", "-E", "unsupervised"};
+        //manager.main(managerArgs21);
         TimeUnit.SECONDS.sleep(60);
       } catch (Exception b) {
         fail = true;

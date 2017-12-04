@@ -30,9 +30,18 @@ class KMeans(
       }
       print("Making Assignments")
       val (newClusters: List[Cluster], newNextCentroidOnError: Int) = makeAssignments(currentClusters, dataset, columnContinuities, nextCentroidOnError)
+      val individualInstances: String = newClusters.zipWithIndex.map{ case (cluster: Cluster, index: Int) =>
+        s"Cluster ${index}: ${cluster.amountAssigned}"
+      }.mkString(", ")
+      val individualSSEs: String = newClusters.zipWithIndex.map{ case (cluster: Cluster, index: Int) =>
+        f"Cluster ${index}: ${cluster.calcSSE}%1.3f"
+      }.mkString(", ")
+      println(s"Amount of instances: ${individualInstances}")
+      println(s"Individual SSE: ${individualSSEs}")
+      println(f"Total SSE: ${newClusters.map(_.calcSSE).sum}%1.3f")
       val newClusterCentroids: List[Cluster] = newClusters.map(_.resetClusterCentroid)
       val newSSE: Double = newClusterCentroids.map(_.calcSSE).sum
-      println(f"SSE: ${newSSE}%1.3f\n")
+      //println(f"Updated SSE: ${newSSE}%1.3f")
       val silhouetteMetric: Double = newClusterCentroids.zipWithIndex.map { case (cluster: Cluster, index: Int) =>
         val interalDissimilarity: Double = cluster.calculateAverageDissimilarity
         val externalDissimilarity: Double = newClusterCentroids.zipWithIndex.map { case (compareCluster: Cluster, compareIndex: Int) =>
@@ -50,10 +59,12 @@ class KMeans(
           0
         }
       }.sum / (newClusterCentroids.size * 1.0)
+      println(f"Silhouette: ${silhouetteMetric}%1.3f")
+      println
       val silhouetteDifference: Double = Math.abs(silhouetteMetric - bestSilhouette)
       val (newStoppingCount: Int, newBestSSE: Double, newBestSilhouette: Double) = if (stopOnSSE) {
         val tempBestSilhouette: Double = if (silhouetteMetric > bestSilhouette) silhouetteMetric else bestSilhouette
-        if (newSSE > bestSSE) {
+        if (newSSE >= bestSSE) {
           (stoppingCount + 1, bestSSE, tempBestSilhouette)
         } else {
           (0, newSSE, tempBestSilhouette)
@@ -66,7 +77,7 @@ class KMeans(
           (stoppingCount + 1, tempBestSSE, bestSilhouette)
         }
       }
-      val keepTraining: Boolean = newStoppingCount <= 2 && (stopOnSSE || (newBestSilhouette == 0 || silhouetteDifference > .00001))
+      val keepTraining: Boolean = newStoppingCount <= 1 && (stopOnSSE || (newBestSilhouette == 0 || silhouetteDifference > .00001))
       if (keepTraining) {
         (newClusterCentroids, newStoppingCount, newBestSSE, newBestSilhouette, totalSilhouette + silhouetteMetric, newNextCentroidOnError)
       } else {
@@ -74,25 +85,25 @@ class KMeans(
           println("SSE has converged")
         } else {
           println("Silhouette has converged")
-          println(s"Final Silhouette is ${(totalSilhouette + silhouetteMetric).toString}")
+          println(s"Average Silhouette is ${((totalSilhouette + silhouetteMetric) / (epochNum + 1)).toString}")
         }
         return
       }
     }
-    println("SSE did not converge within the maximum amount of epochs")
+    println("Algorithm did not converge within the maximum amount of epochs")
   }
 }
 
 object KMeans {
-  val numberOfClusters: Int = 5
+  val numberOfClusters: Int = 3
 
   val seedWithFirstRows: Boolean = true
 
-  val excludeFirstColumn: Boolean = true
+  val excludeFirstColumn: Boolean = false
 
-  val excludeLastColumn: Boolean = true
+  val excludeLastColumn: Boolean = false
 
-  val maxEpochs: Int = 2
+  val maxEpochs: Int = 100
 
   val stopOnSSE: Boolean = true
 
